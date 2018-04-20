@@ -1,0 +1,10 @@
+Flask
+itsdangerous
+Jinja2
+MarkupSafe
+Werkzeug
+wheel
+gunicorn
+Flask-OAuthlib
+Flask-PyMongo
+pymongo

@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}Forum{% endblock %}
+
+{% block content %}
+  <h1>Forum</h1>
+  <p>Life forum.  Post whats on your mind.</p>
+  {% if logged_in %}
+    <form action='/posted' method="post">
+      <textarea name="message" style="width:100%; height:100px;"></textarea>
+      <br>
+      <input type="submit" value="Post">
+    </form>
+  {% endif %}  
+
+  {{ past_posts }}
+
+
+{% endblock %}

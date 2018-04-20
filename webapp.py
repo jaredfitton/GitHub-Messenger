@@ -17,16 +17,16 @@ app.debug = True #Change this to False for production
 app.secret_key = os.environ['SECRET_KEY'] #used to sign session cookies
 oauth = OAuth(app)
 
-url = 'mongodb://{}:{}@{}:{}/{}'.format(
-    os.environ["MONGO_USERNAME"],
-    os.environ["MONGO_PASSWORD"],
-    os.environ["MONGO_HOST"],
-    os.environ["MONGO_PORT"],
-    os.environ["MONGO_DBNAME"])
-
-client = pymongo.MongoClient(url)
-db = client[os.environ["MONGO_DBNAME"]]
-collection = db["posts"]
+# url = 'mongodb://{}:{}@{}:{}/{}'.format(
+#     os.environ["MONGO_USERNAME"],
+#     os.environ["MONGO_PASSWORD"],
+#     os.environ["MONGO_HOST"],
+#     os.environ["MONGO_PORT"],
+#     os.environ["MONGO_DBNAME"])
+#
+# client = pymongo.MongoClient(url)
+# db = client[os.environ["MONGO_DBNAME"]]
+# collection = db["posts"]
 
 #Set up GitHub as OAuth provider
 github = oauth.remote_app(

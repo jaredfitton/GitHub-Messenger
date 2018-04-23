@@ -53,6 +53,8 @@ def inject_logged_in():
 def home():
     return render_template('home.html', past_posts=posts_to_html())
 
+
+
 def posts_to_html():
     forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
     for post in collection.find():

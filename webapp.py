@@ -51,13 +51,14 @@ def inject_logged_in():
 
 @app.route('/')
 def home():
-    return render_template('home.html', past_posts=posts_to_html())
+    return render_template('home.html', past_posts=posts_to_html("SB"))
 
 
 
-def posts_to_html():
+
+def posts_to_html(hometownval):
     forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
-    for post in collection.find():
+    for post in collection.find("location": hometownval):
         try:
             # print(post["_id"])
             # print("got into for collection.find")
@@ -98,7 +99,7 @@ def post():
         print("Unable to post :(")
         print(e)
 
-    return render_template('home.html', past_posts = posts_to_html())
+    return render_template('home.html', past_posts = posts_to_html("SB"))
 
     #This function should add the new post to the JSON file of posts and then render home.html and display the posts.
     #Every post should include the username of the poster and text of the post.

@@ -54,14 +54,13 @@ def inject_logged_in():
 
 @app.route('/')
 def home():
-<<<<<<< HEAD
     return render_template('home.html')
     # , past_posts=posts_to_html()
-=======
+
     return render_template('home.html', past_posts=posts_to_html("SB"))
 
 
->>>>>>> 13952135d0ddea545973673c7154b3486abef18d
+# >>>>>>> 13952135d0ddea545973673c7154b3486abef18d
 
 
 def posts_to_html(hometownval):

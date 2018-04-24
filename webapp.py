@@ -10,8 +10,8 @@ import json
 
 os.system("echo '[]'>" + 'forum.json')
 
-'''TAKE THIS OUT BEFORE RUNNING ON HEROKU'''
-# os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+# '''TAKE THIS OUT BEFORE RUNNING ON HEROKU'''
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 app = Flask(__name__)
 

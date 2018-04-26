@@ -54,7 +54,7 @@ def inject_logged_in():
 
 @app.route('/')
 def home():
-    return render_template('home.html', past_posts=posts_to_html("SB"))
+    return render_template('home.html') # past_posts=posts_to_html("SB")
 
 def posts_to_html(hometownval):
     forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")

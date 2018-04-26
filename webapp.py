@@ -10,8 +10,8 @@ import json
 
 os.system("echo '[]'>" + 'forum.json')
 
-'''TAKE THIS OUT BEFORE RUNNING ON HEROKU'''
-# os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+# '''TAKE THIS OUT BEFORE RUNNING ON HEROKU'''
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 app = Flask(__name__)
 
@@ -54,8 +54,20 @@ def inject_logged_in():
 
 @app.route('/')
 def home():
+<<<<<<< HEAD
     return render_template('home.html', past_posts=posts_to_html("SB"))
 
+=======
+    return render_template('home.html')
+    # , past_posts=posts_to_html()
+
+    return render_template('home.html', past_posts=posts_to_html("SB"))
+
+
+# >>>>>>> 13952135d0ddea545973673c7154b3486abef18d
+
+
+>>>>>>> fc8d57168d48d1b279a55398bff33634a5bbe886
 def posts_to_html(hometownval):
     forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
     for post in collection.find({"location": hometownval}):

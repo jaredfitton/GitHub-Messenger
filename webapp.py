@@ -54,20 +54,8 @@ def inject_logged_in():
 
 @app.route('/')
 def home():
-<<<<<<< HEAD
     return render_template('home.html', past_posts=posts_to_html("SB"))
 
-=======
-    return render_template('home.html')
-    # , past_posts=posts_to_html()
-
-    return render_template('home.html', past_posts=posts_to_html("SB"))
-
-
-# >>>>>>> 13952135d0ddea545973673c7154b3486abef18d
-
-
->>>>>>> fc8d57168d48d1b279a55398bff33634a5bbe886
 def posts_to_html(hometownval):
     forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
     for post in collection.find({"location": hometownval}):

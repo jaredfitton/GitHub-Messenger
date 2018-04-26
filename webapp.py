@@ -54,15 +54,7 @@ def inject_logged_in():
 
 @app.route('/')
 def home():
-<<<<<<< HEAD
-    return render_template('home.html')
-    # , past_posts=posts_to_html()
-=======
     return render_template('home.html', past_posts=posts_to_html("SB"))
-
-
->>>>>>> 13952135d0ddea545973673c7154b3486abef18d
-
 
 def posts_to_html(hometownval):
     forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
@@ -115,7 +107,7 @@ def post():
 #redirect to GitHub's OAuth page and confirm callback URL
 @app.route('/login')
 def login():
-    return github.authorize(callback=url_for('authorized', _external=True, _scheme='http')) #callback URL must match the pre-configured callback URL
+    return github.authorize(callback=url_for('authorized', _external=True, _scheme='https')) #callback URL must match the pre-configured callback URL
 
 @app.route('/logout')
 def logout():

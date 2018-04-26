@@ -1,7 +1,6 @@
 from flask import Flask, redirect, url_for, session, request, jsonify, Markup
 from flask_oauthlib.client import OAuth
 from flask import render_template
-from bson.objectid import ObjectId
 
 import pymongo
 import pprint
@@ -54,25 +53,13 @@ def inject_logged_in():
 
 @app.route('/')
 def home():
-    return render_template('home.html') # past_posts=posts_to_html("SB")
+    return render_template('home.html', past_posts=posts_to_html("SB"))
 
 def posts_to_html(hometownval):
     forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
     for post in collection.find({"location": hometownval}):
         try:
-            # print(post["_id"])
-            # print("got into for collection.find")
-            # {'_id': ObjectId('5ab3df4f0bac5800099e1fd4')
-
-            docid=str(post["_id"])
-
-            print(docid)
-            # print(docid)
-            forum_table += Markup("<tr> <td>" + post["username"] + "</td> <td>" + post["message"])
-            if session['user_data']['login'] == post["username"]: #we session user is the same as poster
-                forum_table += Markup('<form action = "/delete" method = "post"> <button value=' + docid + ' type="submit" name="delete" class="btn btn-secondary">Delete</button> </form>')
-                 #adds another column to the table with a delete button this is the code jared needs
-            forum_table += Markup("</td> </tr>")
+            forum_table += Markup("<tr> <td>" + post["username"] + "</td> <td>" + post["message"] + "</td> </tr>")
         except Exception as e:
             print(e)
     forum_table += Markup("</table>")

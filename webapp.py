@@ -1,6 +1,7 @@
-from flask import Flask, redirect, url_for, session, request, jsonify, Markup
+from flask import Flask, redirect, url_for, session, request, jsonify, Markup, flash
 from flask_oauthlib.client import OAuth
 from flask import render_template
+
 
 import pymongo
 import pprint
@@ -115,12 +116,14 @@ def authorized():
         try:
             session['github_token'] = (resp['access_token'], '') #save the token to prove that the user logged in
             session['user_data']=github.get('user').data
-            message='You were successfully logged in as ' + session['user_data']['login']
+            flash('You were successfully logged in as ' + session['user_data']['login'])
+            # message='You were successfully logged in as ' + session['user_data']['login']
         except Exception as inst:
             session.clear()
             print(inst)
-            message='Unable to login, please try again.  '
-    return render_template('message.html', message=message)
+            flash('unable to login')
+            # message='Unable to login, please try again.  '
+    return render_template('home.html')
 
 #the tokengetter is automatically called to check who is logged in.
 @github.tokengetter

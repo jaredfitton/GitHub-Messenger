@@ -57,7 +57,13 @@
                     <li><a href="#section3">Group3</a></li>
                     <li><a href="#section3">Group3</a></li>
                 </ul><br>
+                <p>{% with messages = get_flashed_messages() %} {% if messages %}
+                        {% for message in messages %}
+                        {{ message }}
+                        {% endfor %}
 
+                    {% endif %} {% endwith %} {% block body %}{% endblock %}
+                </p>
             </div>
 
             <div class="col-sm-9">
@@ -66,14 +72,7 @@
                 <h2>Welcome</h2>
                 <h5><span class="glyphicon glyphicon-time"></span> Hometown chat</h5>
                 <h5> <a href="/login">Login</a></h5><br>
-                <p>{% with messages = get_flashed_messages() %} {% if messages %}
-                    <ul class=flashes>
-                        {% for message in messages %}
-                        <li>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %} {% endwith %} {% block body %}{% endblock %}
-                </p>
+
                     <div id="gridPanel" runat="server" scrollbars="Auto">
                         <table class='table table-bordered'>
                             <!-- already have the table just need to fill it in with tr and td -->

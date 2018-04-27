@@ -66,31 +66,39 @@
                 <h2>Welcome</h2>
                 <h5><span class="glyphicon glyphicon-time"></span> Hometown chat</h5>
                 <h5> <a href="/login">Login</a></h5><br>
-                <div id="gridPanel" runat="server" scrollbars="Auto">
-                    <table class='table table-bordered'>
-                        <!-- already have the table just need to fill it in with tr and td -->
-                        {{ past_posts }}
-                    </table>
-                </div>
-                <br><br>
+                <p>{% with messages = get_flashed_messages() %} {% if messages %}
+                    <ul class=flashes>
+                        {% for message in messages %}
+                        <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %} {% endwith %} {% block body %}{% endblock %}
+                </p>
+                    <div id="gridPanel" runat="server" scrollbars="Auto">
+                        <table class='table table-bordered'>
+                            <!-- already have the table just need to fill it in with tr and td -->
+                            {{ past_posts }}
+                        </table>
+                    </div>
+                    <br><br>
 
-                <div id="formdiv">
-                    {% if logged_in %}
-                    <h4>Post to the Group</h4>
-                    <form action='/posted' method="post">
-                        <textarea id="formtext" name="message"></textarea>
-                        <br>
-                        <input type="submit" value="Post" id="postbutton">
-                    </form>
-                    <br><br> {% endif %}
-                </div>
+                    <div id="formdiv">
+                        {% if logged_in %}
+                        <h4>Post to the Group</h4>
+                        <form action='/posted' method="post">
+                            <textarea id="formtext" name="message"></textarea>
+                            <br>
+                            <input type="submit" value="Post" id="postbutton">
+                        </form>
+                        <br><br> {% endif %}
+                    </div>
 
 
 
 
-                <footer class="container-fluid">
-                    <p>Footer Text</p>
-                </footer>
+                    <footer class="container-fluid">
+                        <p>Footer Text</p>
+                    </footer>
 
 </body>
 

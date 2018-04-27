@@ -80,6 +80,7 @@ def delete():
 
 @app.route('/posted', methods=['POST'])
 def post():
+    print("posted")
     username_local = session['user_data']['login']
     message_local = request.form['message']
     try:
@@ -96,6 +97,7 @@ def post():
 #redirect to GitHub's OAuth page and confirm callback URL
 @app.route('/login')
 def login():
+    print("login")
     return github.authorize(callback=url_for('authorized', _external=True, _scheme='https')) #callback URL must match the pre-configured callback URL
 
 @app.route('/logout')

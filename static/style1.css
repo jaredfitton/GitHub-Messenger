@@ -1,0 +1,30 @@
+#gridPanel{
+    height:100px;
+    overflow: scroll;
+    position: relative;
+}
+
+#gridPanel
+{
+   top: expression(document.getElementById("gridPanel").scrollTop-2);
+   left:expression(parentNode.parentNode.parentNode.parentNode.scrollLeft);
+   position: relative;
+   z-index: 20;
+   width: 100%;
+   height: 200px;
+  }
+
+#tablediv{
+    /* align-items: center; */
+}
+
+#formtext{
+    width:100%;
+    height:100px;
+    /* margin-left: 10%; */
+    /* margin-right: 10%; */
+}
+
+#postbutton{
+    margin-left: 46%;
+}

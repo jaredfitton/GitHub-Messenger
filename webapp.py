@@ -108,6 +108,7 @@ def logout():
 
 @app.route('/login/authorized')
 def authorized():
+    print("login authorized")
     resp = github.authorized_response()
     if resp is None:
         session.clear()
@@ -117,6 +118,7 @@ def authorized():
             session['github_token'] = (resp['access_token'], '') #save the token to prove that the user logged in
             session['user_data']=github.get('user').data
             flash('You were successfully logged in as ' + session['user_data']['login'])
+            flash('logged in')
             # message='You were successfully logged in as ' + session['user_data']['login']
         except Exception as inst:
             session.clear()

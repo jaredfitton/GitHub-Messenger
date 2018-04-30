@@ -134,6 +134,9 @@ def authorized():
 def get_github_oauth_token():
     return session.get('github_token')
 
+def getUserlocation():
+    return session['user_data']["location"]
+
 
 if __name__ == '__main__':
     app.run()

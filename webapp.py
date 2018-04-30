@@ -104,6 +104,7 @@ def login():
 
 @app.route('/logout')
 def logout():
+    print("---------logout")
     session.clear()
     return render_template('message.html', message='You were logged out')
 

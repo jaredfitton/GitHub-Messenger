@@ -60,6 +60,7 @@ def home():
 def posts_to_html(hometownval):
     print(hometownval)
     forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
+    print(collection.find_one())
     for post in collection.find(): #{"location": hometownval}
         try:
             forum_table += Markup("<tr> <td>" + post["username"] + "</td> <td>" + post["message"] + "</td> </tr>")

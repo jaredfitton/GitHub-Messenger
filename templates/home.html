@@ -69,6 +69,7 @@
                 <h5> <a href="/logout">logout</a></h5><br> {% else %}
                 <h5> <a href="/login">login</a></h5><br> {% endif %}
 
+                {% if logged_in %}
                 <div id="gridPanel" runat="server" scrollbars="Auto">
                     <table class='table table-bordered'>
                         <!-- already have the table just need to fill it in with tr and td -->
@@ -78,7 +79,7 @@
                 <br><br>
 
                 <div id="formdiv">
-                    {% if logged_in %}
+
                     <h4>Post to the Group</h4>
                     <form action='/posted' method="post">
                         <textarea id="formtext" name="message"></textarea>

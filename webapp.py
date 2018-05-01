@@ -13,9 +13,12 @@ import json
 os.system("echo '[]'>" + 'forum.json')
 
 # '''TAKE THIS OUT BEFORE RUNNING ON HEROKU'''
-os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+# os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 app = Flask(__name__)
+socketio = SocketIO(app, async_mode=None)
+thread = None
+thread_lock = Lock()
 
 app.debug = True #Change this to False for production
 
@@ -57,7 +60,7 @@ def inject_logged_in():
 
 @app.route('/')
 def home():
-    return render_template('home.html', past_posts=posts_to_html(get_user_location()))
+    return render_template('home.html', past_posts=posts_to_html("SB"))
 
 def posts_to_html(hometownval):
     print(hometownval)
@@ -87,14 +90,14 @@ def post():
     print("posted")
     username_local = session['user_data']['login']
     message_local = request.form['message']
-    user_location = get_user_location()
+    user_location = "SB"
     try:
         collection.insert( { "username": username_local, "message": message_local, "location": user_location } )
     except Exception as e:
         print("Unable to post :(")
         print(e)
 
-    return render_template('home.html', past_posts = posts_to_html(get_user_location()))
+    return render_template('home.html', past_posts = posts_to_html("SB"))
 
 
 #redirect to GitHub's OAuth page and confirm callback URL
@@ -128,14 +131,12 @@ def authorized():
             print(inst)
             flash('unable to login')
             # message='Unable to login, please try again.  '
-    return render_template('home.html', past_posts = posts_to_html(get_user_location()))
+    return render_template('home.html')
+
 #the tokengetter is automatically called to check who is logged in.
 @github.tokengetter
 def get_github_oauth_token():
     return session.get('github_token')
-
-def get_user_location():
-    return session['user_data']["location"]
 
 
 if __name__ == '__main__':

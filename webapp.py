@@ -107,8 +107,8 @@ def login():
 def logout():
     print("---------logout")
     session.clear()
-    return render_template('message.html', message='You were logged out')
-
+    flash('You were logged out')
+    return render_template('home.html')
 @app.route('/login/authorized')
 def authorized():
     print("login authorized")

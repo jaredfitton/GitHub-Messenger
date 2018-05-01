@@ -57,7 +57,7 @@ def inject_logged_in():
 
 @app.route('/')
 def home():
-    return render_template('home.html', past_posts=posts_to_html("SB"))
+    return render_template('home.html', past_posts=posts_to_html(get_user_location()))
 
 def posts_to_html(hometownval):
     print(hometownval)
@@ -87,14 +87,14 @@ def post():
     print("posted")
     username_local = session['user_data']['login']
     message_local = request.form['message']
-    user_location = "SB"
+    user_location = get_user_location()
     try:
         collection.insert( { "username": username_local, "message": message_local, "location": user_location } )
     except Exception as e:
         print("Unable to post :(")
         print(e)
 
-    return render_template('home.html', past_posts = posts_to_html("SB"))
+    return render_template('home.html', past_posts = posts_to_html(get_user_location()))
 
 
 #redirect to GitHub's OAuth page and confirm callback URL
@@ -128,12 +128,14 @@ def authorized():
             print(inst)
             flash('unable to login')
             # message='Unable to login, please try again.  '
-    return render_template('home.html')
-
+    return render_template('home.html', past_posts = posts_to_html(get_user_location()))
 #the tokengetter is automatically called to check who is logged in.
 @github.tokengetter
 def get_github_oauth_token():
     return session.get('github_token')
+
+def get_user_location():
+    return session['user_data']["location"]
 
 
 if __name__ == '__main__':

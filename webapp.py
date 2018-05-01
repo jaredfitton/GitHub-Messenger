@@ -109,8 +109,8 @@ def login():
 def logout():
     print("---------logout")
     session.clear()
-    return render_template('message.html', message='You were logged out')
-
+    flash('You were logged out')
+    return render_template('home.html')
 @app.route('/login/authorized')
 def authorized():
     print("login authorized")
@@ -131,7 +131,7 @@ def authorized():
             flash('unable to login')
             # message='Unable to login, please try again.  '
 
-    return render_template('home.html') #, past_posts = posts_to_html(get_user_location()))
+    return render_template('home.html', past_posts = posts_to_html(get_user_location()))
 
 #the tokengetter is automatically called to check who is logged in.
 @github.tokengetter

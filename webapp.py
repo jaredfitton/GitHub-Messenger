@@ -1,8 +1,8 @@
 from flask import Flask, redirect, url_for, session, request, jsonify, Markup, flash
 from flask_oauthlib.client import OAuth
 from flask import render_template
-# from flask_socketio import SocketIO, emit, join_room, leave_room, \
-#     close_room, rooms, disconnect
+from flask_socketio import SocketIO, emit, join_room, leave_room, \
+    close_room, rooms, disconnect
 
 
 import pymongo

@@ -62,7 +62,7 @@ def home():
     return render_template('home.html', past_posts=posts_to_html("SB"))
 
 def posts_to_html(hometownval):
-    print(hometownval)
+    print("User's hometown: " + hometownval)
     forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
     for post in collection.find({"location": hometownval}):
         try:
@@ -111,6 +111,7 @@ def logout():
     session.clear()
     flash('You were logged out')
     return render_template('home.html')
+
 @app.route('/login/authorized')
 def authorized():
     print("login authorized")
@@ -130,7 +131,7 @@ def authorized():
             print(inst)
             flash('unable to login')
             # message='Unable to login, please try again.  '
-    print(get_user_location())
+    print("User's Location: " + get_user_location())
     return render_template('home.html', past_posts = posts_to_html("SB"))
 
 #the tokengetter is automatically called to check who is logged in.

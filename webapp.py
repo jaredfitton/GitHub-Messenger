@@ -68,15 +68,16 @@ def posts_to_html(hometownval):
     forum_table += Markup("</table>")
     return forum_table
 
-@app.route('/delete', methods=['POST'])
-def delete():
-    print("In delete method" + request.form["delete"])
-
-    docid = request.form["delete"]
-
-    collection.delete_one({'_id': ObjectId(docid)})
-
-    return render_template('home.html', past_posts = posts_to_html())
+#Use this method to delete messages
+# @app.route('/delete', methods=['POST'])
+# def delete():
+#     print("In delete method" + request.form["delete"])
+#
+#     docid = request.form["delete"]
+#
+#     collection.delete_one({'_id': ObjectId(docid)})
+#
+#     return render_template('home.html', past_posts = posts_to_html())
 
 
 @app.route('/posted', methods=['POST'])
@@ -93,8 +94,6 @@ def post():
 
     return render_template('home.html', past_posts = posts_to_html("SB"))
 
-    #This function should add the new post to the JSON file of posts and then render home.html and display the posts.
-    #Every post should include the username of the poster and text of the post.
 
 #redirect to GitHub's OAuth page and confirm callback URL
 @app.route('/login')

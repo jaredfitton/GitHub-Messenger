@@ -59,12 +59,12 @@ def inject_logged_in():
 
 @app.route('/')
 def home():
-    return render_template('home.html', past_posts=posts_to_html("SB"))
+    return render_template('home.html', past_posts=posts_to_html(get_user_location()))
 
-def posts_to_html(hometownval):
-    print("User's hometown: " + hometownval)
+def posts_to_html(user_location):
+    print("User's location: " + user_location)
     forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
-    for post in collection.find({"location": hometownval}):
+    for post in collection.find({"location": user_location}):
         try:
             forum_table += Markup("<tr> <td>" + post["username"] + "</td> <td>" + post["message"] + "</td> </tr>")
         except Exception as e:

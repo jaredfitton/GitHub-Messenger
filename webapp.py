@@ -131,7 +131,8 @@ def authorized():
             print(inst)
             flash('unable to login')
             # message='Unable to login, please try again.  '
-    print("User's Location: " + str(get_user_location()))
+    print("User's Name: " + get_user_name())
+    print("User's Location: " + get_user_location())
     return render_template('home.html', past_posts = posts_to_html("SB"))
 
 #the tokengetter is automatically called to check who is logged in.
@@ -140,8 +141,10 @@ def get_github_oauth_token():
     return session.get('github_token')
 
 def get_user_location():
-    return session['user_data']['location']
+    return str(session['user_data']['location'])
 
+def get_user_name():
+    return str(session['user_data']['name'])
 
 if __name__ == '__main__':
     app.run()

@@ -135,7 +135,7 @@ def get_github_oauth_token():
     return session.get('github_token')
 
 def get_user_location():
-    return session['user_data']["location"]
+    return session['user_data']['location']
 
 
 if __name__ == '__main__':

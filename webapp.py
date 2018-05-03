@@ -147,8 +147,7 @@ def get_github_oauth_token():
 
 def get_user_location():
     location = session['user_data']['location']
-    print("boo" + location)
-    if location == "":
+    if isinstance(location, str):
         return "no location"
     return location.lower()
 

@@ -59,8 +59,10 @@ def inject_logged_in():
 
 @app.route('/')
 def home():
-    print(github_token in session + "----------------")
-    return render_template('home.html', past_posts=posts_to_html(get_user_location()))
+    if 'github_token' in session:
+        return render_template('home.html', past_posts=posts_to_html(get_user_location()))
+    else:
+        return render_template('home.html')
 
 def posts_to_html(user_location):
     print("User's location: " + user_location)

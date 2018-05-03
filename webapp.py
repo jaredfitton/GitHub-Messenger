@@ -67,7 +67,8 @@ def home():
 def posts_to_html(user_location):
     print("User's location: " + user_location)
     if user_location == "no location":
-        return flash("Set location in your github bio to find people!")
+        flash("Set location in your github bio to find people!")
+        return ""
     forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
     for post in collection.find({"location": user_location}):
         try:
@@ -149,7 +150,7 @@ def get_user_location():
     location = session['user_data']['location']
     if isinstance(location, str):
         return location.lower()
-    return "no location" 
+    return "no location"
 
 def get_user_name():
     return str(session['user_data']['name'])

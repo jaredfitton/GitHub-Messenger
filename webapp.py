@@ -148,10 +148,9 @@ def get_github_oauth_token():
 
 def get_user_location():
     location = session['user_data']['location']
-    print(location)
-    if location == "":
-        return "no location"
-    return location.lower()
+    if isinstance(location, str):
+        return location.lower()
+    return "no location" 
 
 def get_user_name():
     return str(session['user_data']['name'])

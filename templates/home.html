@@ -60,6 +60,7 @@
                 </ul><br>
                 <p>{% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %} {{ message }} {% endfor %} {% endif %} {% endwith %} {% block body %}{% endblock %}
                 </p>
+            </div>
 
 
 
@@ -76,7 +77,7 @@
                 <!-- already have the table just need to fill it in with tr and td -->
                 {{ past_posts }}
                 <!-- </table> -->
-
+            </div>
             <br><br>
 
             <div id="formdiv">
@@ -88,7 +89,8 @@
                     <input type="submit" value="Post" id="postbutton">
                 </form>
                 <br><br> {% endif %}
-                
+            </div>
+
 
 
     <!-- <footer class="container-fluid">

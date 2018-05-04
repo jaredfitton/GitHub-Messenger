@@ -1,5 +1,6 @@
 from flask import Flask, redirect, url_for, session, request, jsonify, Markup, flash, render_template
 from flask_oauthlib.client import OAuth
+from flask_socketio import SocketIO, emit, join_room, leave_room, close_room, rooms, disconnect
 
 import pymongo
 import pprint
@@ -12,6 +13,7 @@ os.system("echo '[]'>" + 'forum.json')
 # os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 app = Flask(__name__)
+socketio = SocketIO(app, async_mode=None)
 
 # app.debug = True #Change this to False for production
 
@@ -45,6 +47,9 @@ github = oauth.remote_app(
 #use a JSON file to store the past posts.  A global list variable doesn't work when handling multiple requests coming in and being handled on different threads
 #Create and set a global variable for the name of you JSON file here.  The file will be created on Heroku, so you don't need to make it in GitHub
 
+@socketio.on('connect') #run this when the connection starts
+def test_connection():
+    print("A user has connected to the server.")
 
 @app.context_processor
 def inject_logged_in():
@@ -54,9 +59,9 @@ def inject_logged_in():
 @app.route('/')
 def home():
     if 'github_token' in session:
-        return render_template('home.html', past_posts=posts_to_html(get_user_location()))
+        return render_template('home.html', past_posts=posts_to_html(get_user_location()), async_mode=socketio.async_mode)
     else:
-        return render_template('home.html')
+        return render_template('home.html', async_mode=socketio.async_mode)
 
 def posts_to_html(user_location):
     print("User's location: " + user_location)
@@ -92,6 +97,7 @@ def post():
     user_location = get_user_location()
     try:
         collection.insert( { "username": username_local, "message": message_local, "location": user_location } )
+        socketio.emit('new_message', {"username": username_local, "message": message_local})
     except Exception as e:
         print("Unable to post :(")
         print(e)
@@ -150,4 +156,4 @@ def get_user_name():
     return str(session['user_data']['name'])
 
 if __name__ == '__main__':
-    app.run()
+    socketio.run()

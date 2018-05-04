@@ -1,8 +1,5 @@
 from flask import Flask, redirect, url_for, session, request, jsonify, Markup, flash, render_template
 from flask_oauthlib.client import OAuth
-from flask_socketio import SocketIO, emit, join_room, leave_room, \
-    close_room, rooms, disconnect
-from threading import Lock
 
 import pymongo
 import pprint
@@ -15,9 +12,6 @@ os.system("echo '[]'>" + 'forum.json')
 # os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 app = Flask(__name__)
-socketio = SocketIO(app, async_mode=None)
-thread = None
-thread_lock = Lock()
 
 app.debug = True #Change this to False for production
 

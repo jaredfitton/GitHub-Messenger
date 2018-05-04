@@ -15,9 +15,9 @@
                 namespace = '/'
                 var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
                 // event handler for the start event
-                socket.on('new_message', function(msg){
-                    $('#recieved-messages').append('<br>' + 'Username: ' + msg["username"] + "     Message: " + msg['message']);
-                });
+                // socket.on('new_message', function(msg){
+                //     $('#recieved-messages').append('<br>' + 'Username: ' + msg["username"] + "     Message: " + msg['message']);
+                // });
             });
     </script>
 </head>

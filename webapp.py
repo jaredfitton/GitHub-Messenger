@@ -97,7 +97,6 @@ def post():
     user_location = get_user_location()
     try:
         collection.insert( { "username": username_local, "message": message_local, "location": user_location } )
-        socketio.emit('new_message', {"username": username_local, "message": message_local})
     except Exception as e:
         print("Unable to post :(")
         print(e)

@@ -133,8 +133,8 @@ def authorized():
             # message='Unable to login, please try again.  '
     print("User's Name: " + get_user_name())
     print("User's Location: " + get_user_location())
-    return render_template('home.html', past_posts = posts_to_html(get_user_location()))
-
+    # return render_template('home.html', past_posts = posts_to_html(get_user_location()))
+    return render_template('home.html', past_posts = posts_to_html("Santa Barbara"))
 #the tokengetter is automatically called to check who is logged in.
 @github.tokengetter
 def get_github_oauth_token():

@@ -58,6 +58,10 @@ def test_connection():
             thread = socketio.start_background_task(target=background_thread)
     emit('start', 'Connected')
 
+@socketio.on('disconnect', namespace='/_GET')
+def test_disconnect():
+    print('Client Disconnected')
+
 def background_thread():
     #this funtion does the counting
     count = 0

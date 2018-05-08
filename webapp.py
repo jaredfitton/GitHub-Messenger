@@ -48,7 +48,7 @@ github = oauth.remote_app(
 
 @app.context_processor
 def inject_logged_in():
-    print("logged in")
+    # print("logged in")
     return {"logged_in":('github_token' in session)}
     # return {"logged_in": True}
 
@@ -104,7 +104,7 @@ def post():
 @app.route('/login')
 def login():
     print("login")
-    return github.authorize(callback=url_for('authorized', _external=True, _scheme='http')) #callback URL must match the pre-configured callback URL
+    return github.authorize(callback=url_for('authorized', _external=True, _scheme='https')) #callback URL must match the pre-configured callback URL
 
 @app.route('/logout')
 def logout():

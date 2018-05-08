@@ -48,6 +48,7 @@ github = oauth.remote_app(
 
 @app.context_processor
 def inject_logged_in():
+    print("logged in")
     return {"logged_in":('github_token' in session)}
     # return {"logged_in": True}
 

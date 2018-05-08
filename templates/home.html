@@ -15,10 +15,7 @@
             namespace = '/'
             var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
             // event handler for the start event
-            socket.on('start', function(msg){
-                $('#start').text(msg); //displays any of the data that the server sent us
-            });
-            socket.on('my_response', function(msg) {
+            socket.on('new_message', function(msg) {
                 $('#log').append('<br>' + msg); //display any of the datat that the sever sent us
             });
         });
@@ -73,11 +70,7 @@
             </div>
 
 
-            <h1>Flask-SocketIO Demo</h1>
-
-        	  <p id="start"></p>
-
-            <h2>Receive:</h2>
+            <h2>Received Messages:</h2>
             <div id="log"></div>
 
 </body>

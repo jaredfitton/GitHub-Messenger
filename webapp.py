@@ -50,26 +50,19 @@ github = oauth.remote_app(
 #use a JSON file to store the past posts.  A global list variable doesn't work when handling multiple requests coming in and being handled on different threads
 #Create and set a global variable for the name of you JSON file here.  The file will be created on Heroku, so you don't need to make it in GitHub
 
-@socketio.on('connect') #run this when the connection starts
-def test_connection():
-    global thread
-    with thread_lock: #lock thread in case multiple clients are connecting at the same time
-        if thread is None:
-            thread = socketio.start_background_task(target=background_thread)
-    emit('start', 'Connected')
+@socketio.on('connect')
+def on_join():
+    username = get_user_name()
+    room = "Santa Barbara"
+    join_room(room)
+    print(username + ' has entered the room.')
 
-@socketio.on('disconnect', namespace='/_GET')
-def test_disconnect():
-    print('Client Disconnected')
-
-def background_thread():
-    #this funtion does the counting
-    count = 0
-    while True:
-        socketio.sleep(2) #wait 5 seconds
-        count = count + 1 #add 1 to count
-        print(count)
-        socketio.emit('my_response', count) #send count to all clients
+@socketio.on('disconnect')
+def on_leave():
+    username = get_user_name()
+    room = "Santa Barbara"
+    leave_room(room)
+    print(username + ' has left the room.')
 
 @app.context_processor
 def inject_logged_in():
@@ -79,7 +72,7 @@ def inject_logged_in():
 @app.route('/')
 def home():
     if 'github_token' in session:
-        return render_template('home.html', past_posts=posts_to_html(get_user_location()), async_mode=socketio.async_mode)
+        return render_template('home.html', past_posts=posts_to_html(get_user_location()))
     else:
         return render_template('home.html', async_mode=socketio.async_mode)
 
@@ -120,6 +113,8 @@ def post():
     except Exception as e:
         print("Unable to post :(")
         print(e)
+
+    emit('new_message', message_local, room="Santa Barbara")
 
     return render_template('home.html', past_posts = posts_to_html(get_user_location()))
 

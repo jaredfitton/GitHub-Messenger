@@ -114,7 +114,7 @@ def post():
         print("Unable to post :(")
         print(e)
 
-    emit('new_message', message_local)
+    socketio.emit('new_message', message_local)
 
     return render_template('home.html', past_posts = posts_to_html(get_user_location()))
 

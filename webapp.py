@@ -51,7 +51,7 @@ github = oauth.remote_app(
 @socketio.on('connect')
 def on_join():
     username = get_user_name()
-    room = "santa barbara"
+    room = "Santa Barbara"
     join_room(room)
     print(username + ' has entered the room.')
 
@@ -112,7 +112,7 @@ def post():
         print("Unable to post :(")
         print(e)
 
-    socketio.emit('new_message', message_local)
+    socketio.emit('new_message', message_local, room="Santa Barbara")
 
     return render_template('home.html', past_posts = posts_to_html(get_user_location()))
 

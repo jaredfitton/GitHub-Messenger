@@ -143,7 +143,11 @@ def authorized():
             session['user_data']=github.get('user').data
             flash('You were successfully logged in as ' + session['user_data']['login'])
             flash('logged in')
-            on_login()
+            
+            username = get_user_name()
+            room = "Santa Barbara"
+            join_room(room)
+            print(username + ' has entered the room.')
         except Exception as inst:
             session.clear()
             print(inst)

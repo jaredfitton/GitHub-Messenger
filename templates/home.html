@@ -22,7 +22,8 @@
     <div class="container-fluid">
         <div class="row content">
             <div class="col-sm-3 sidenav">
-                <h4>Michael's Groups</h4>
+                <img id="logo" src="static/github.png" alt="logo" height="20" width="20">
+                <h4>Groups</h4>
                 <ul class="nav nav-pills nav-stacked">
                     <li class="active"><a href="#section1">Hometown</a></li>
                     <li><a href="#section2">Group2</a></li>
@@ -42,6 +43,7 @@
             <h2>Welcome</h2>
             <h5><span class="glyphicon glyphicon-time"></span> Hometown chat</h5> {% if logged_in %}
             <h5> <a href="/logout">logout</a></h5><br> {% else %}
+            <p> </p>
             <h5> <a href="/login">login</a></h5><br> {% endif %} {% if logged_in %}
             <div id="gridPanel" runat="server" scrollbars="Auto">
                 <!-- <table class='table table-bordered'> -->

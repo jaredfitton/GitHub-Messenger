@@ -48,6 +48,7 @@ github = oauth.remote_app(
 
 @app.context_processor
 def inject_logged_in():
+    # print("logged in")
     return {"logged_in":('github_token' in session)}
     # return {"logged_in": True}
 
@@ -103,7 +104,7 @@ def post():
 @app.route('/login')
 def login():
     print("login")
-    return github.authorize(callback=url_for('authorized', _external=True, _scheme='http')) #callback URL must match the pre-configured callback URL
+    return github.authorize(callback=url_for('authorized', _external=True, _scheme='https')) #callback URL must match the pre-configured callback URL
 
 @app.route('/logout')
 def logout():
@@ -134,7 +135,7 @@ def authorized():
     # print("User's Name: " + get_user_name())
     # print("User's Location: " + get_user_location())
     # return render_template('home.html', past_posts = posts_to_html(get_user_location()))
-    return render_template('home.html', past_posts = posts_to_html(get_user_location()))
+    return render_template('home.html', past_posts = posts_to_html("Santa Barbara"))
 #the tokengetter is automatically called to check who is logged in.
 @github.tokengetter
 def get_github_oauth_token():

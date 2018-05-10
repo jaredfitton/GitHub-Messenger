@@ -15,8 +15,6 @@ os.system("echo '[]'>" + 'forum.json')
 
 app = Flask(__name__)
 socketio = SocketIO(app, async_mode=None)
-thread = None
-thread_lock = Lock()
 
 # app.debug = True #Change this to False for production
 
@@ -114,7 +112,7 @@ def post():
         print("Unable to post :(")
         print(e)
 
-    io.sockets.to('santa barbara').emit('new_message', message_local)
+    emit('new_message', message_local, room="Santa Barbara")
 
     return render_template('home.html', past_posts = posts_to_html(get_user_location()))
 

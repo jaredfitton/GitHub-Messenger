@@ -106,15 +106,15 @@ def post():
     username_local = session['user_data']['login']
     message_local = request.form['message']
     user_location = get_user_location()
-    # try:
-    #     collection.insert( { "username": username_local, "message": message_local, "location": user_location } )
-    # except Exception as e:
-    #     print("Unable to post :(")
-    #     print(e)
+    try:
+        collection.insert( { "username": username_local, "message": message_local, "location": user_location } )
+    except Exception as e:
+        print("Unable to post :(")
+        print(e)
 
     socketio.emit('new_message', message_local, room="Santa Barbara")
-    #
-    # return render_template('home.html', past_posts = posts_to_html(get_user_location()))
+
+    return render_template('home.html', past_posts = posts_to_html(get_user_location()))
 
 
 #redirect to GitHub's OAuth page and confirm callback URL

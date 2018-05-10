@@ -48,15 +48,16 @@ github = oauth.remote_app(
 #use a JSON file to store the past posts.  A global list variable doesn't work when handling multiple requests coming in and being handled on different threads
 #Create and set a global variable for the name of you JSON file here.  The file will be created on Heroku, so you don't need to make it in GitHub
 
-@socketio.on('connect')
-def on_join():
+# @socketio.on('connect')
+
+def join_room():
     username = get_user_name()
     room = "Santa Barbara"
     join_room(room)
     print(username + ' has entered the room.')
 
-@socketio.on('disconnect')
-def on_leave():
+# @socketio.on('disconnect')
+def leave_room():
     username = get_user_name()
     room = "Santa Barbara"
     leave_room(room)
@@ -128,6 +129,7 @@ def logout():
     print("---------logout")
     session.clear()
     flash('You were logged out')
+    leave_room()
     return render_template('home.html')
 
 @app.route('/login/authorized')
@@ -141,6 +143,7 @@ def authorized():
         try:
             session['github_token'] = (resp['access_token'], '') #save the token to prove that the user logged in
             session['user_data']=github.get('user').data
+            join_room()
             flash('You were successfully logged in as ' + session['user_data']['login'])
             flash('logged in')
             # message='You were successfully logged in as ' + session['user_data']['login']

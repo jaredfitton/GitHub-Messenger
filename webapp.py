@@ -50,14 +50,14 @@ github = oauth.remote_app(
 
 # @socketio.on('connect')
 
-def join_room():
+def enter_room():
     username = get_user_name()
     room = "Santa Barbara"
     join_room(room)
     print(username + ' has entered the room.')
 
 # @socketio.on('disconnect')
-def leave_room():
+def exit_room():
     username = get_user_name()
     room = "Santa Barbara"
     leave_room(room)
@@ -127,7 +127,7 @@ def login():
 @app.route('/logout')
 def logout():
     print("---------logout")
-    leave_room()
+    exit_room()
     session.clear()
     flash('You were logged out')
     return render_template('home.html')
@@ -143,7 +143,7 @@ def authorized():
         try:
             session['github_token'] = (resp['access_token'], '') #save the token to prove that the user logged in
             session['user_data']=github.get('user').data
-            join_room()
+            enter_room()
             flash('You were successfully logged in as ' + session['user_data']['login'])
             flash('logged in')
             # message='You were successfully logged in as ' + session['user_data']['login']

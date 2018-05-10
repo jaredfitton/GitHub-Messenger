@@ -127,9 +127,9 @@ def login():
 @app.route('/logout')
 def logout():
     print("---------logout")
+    leave_room()
     session.clear()
     flash('You were logged out')
-    leave_room()
     return render_template('home.html')
 
 @app.route('/login/authorized')

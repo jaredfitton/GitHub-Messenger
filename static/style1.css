@@ -6,14 +6,15 @@
 
 #gridPanel
 {
-   top: expression(document.getElementById("gridPanel").scrollTop-2);
+   /* top: expression(document.getElementById("gridPanel").scrollTop-2);
    left:expression(parentNode.parentNode.parentNode.parentNode.scrollLeft);
    position: relative;
    z-index: 20;
    width: 100%;
    height: 200px;
    overflow-y: auto;
-   overflow: hidden;
+   overflow: hidden; */
+   overflow-y: auto;
   }
 
 #tablediv{

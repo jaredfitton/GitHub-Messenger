@@ -49,17 +49,7 @@ github = oauth.remote_app(
 #Create and set a global variable for the name of you JSON file here.  The file will be created on Heroku, so you don't need to make it in GitHub
 
 
-def on_login():
-    username = get_user_name()
-    room = "Santa Barbara"
-    join_room(room)
-    print(username + ' has entered the room.')
 
-def on_logout():
-    username = get_user_name()
-    room = "Santa Barbara"
-    leave_room(room)
-    print(username + ' has left the room.')
 
 @app.context_processor
 def inject_logged_in():
@@ -143,11 +133,8 @@ def authorized():
             session['user_data']=github.get('user').data
             flash('You were successfully logged in as ' + session['user_data']['login'])
             flash('logged in')
-            
-            username = get_user_name()
-            room = "Santa Barbara"
-            join_room(room)
-            print(username + ' has entered the room.')
+
+            on_login()
         except Exception as inst:
             session.clear()
             print(inst)
@@ -162,6 +149,18 @@ def authorized():
 def get_github_oauth_token():
     return session.get('github_token')
 
+def on_login():
+    username = get_user_name()
+    room = "Santa Barbara"
+    join_room(room)
+    print(username + ' has entered the room.')
+
+def on_logout():
+    username = get_user_name()
+    room = "Santa Barbara"
+    leave_room(room)
+    print(username + ' has left the room.')
+
 def get_user_location():
     location = session['user_data']['location']
     if isinstance(location, str):
@@ -169,7 +168,7 @@ def get_user_location():
     return "no location"
 
 def get_user_name():
-    return str(session['user_data']['name'])
+    return str(session['user_data']['login'])
 
 if __name__ == '__main__':
     socketio.run()

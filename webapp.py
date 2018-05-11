@@ -131,7 +131,9 @@ def authorized():
         try:
             session['github_token'] = (resp['access_token'], '') #save the token to prove that the user logged in
             session['user_data']=github.get('user').data
-            flash('You were successfully logged in as ' + session['user_data']['login'])
+            username = session['user_data']['login']
+            print("\n\n\n\n\n\n\n\n\n\n\n\n Username:   " + username)
+            flash('You were successfully logged in as ' + username)
             flash('logged in')
 
             on_login()

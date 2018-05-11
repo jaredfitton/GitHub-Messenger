@@ -47,21 +47,23 @@
             <div id="gridPanel" runat="server" scrollbars="Auto">
                 <!-- <table class='table table-bordered'> -->
                 <!-- already have the table just need to fill it in with tr and td -->
-                {% with messages = get_flashed_messages() %} {% if messages ==  "Set location in your github bio to find people!"%} {{messages}} {% endif %} {% endwith %}
+                {% with messages = get_flashed_messages() %} {% if messages ==  "no location set"%} {{messages}} {% endif %} {% endwith %}
                 {{ past_posts }}
                 <!-- </table> -->
             </div>
             <br><br>
 
             <div id="formdiv">
-
+              {% if messages ==  "no location set"%}
+                <h4> Set location in your github bio to find people! </h4>
+              {% else %}
                 <h4>Post to the Group</h4>
                 <form action='/posted' method="post">
                     <textarea id="formtext" name="message"></textarea>
                     <br>
                     <input type="submit" value="Post" id="postbutton">
                 </form>
-                <br><br> {% endif %}
+                <br><br> {% endif %} {% endif %}
             </div>
 
 

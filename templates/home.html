@@ -14,13 +14,13 @@
         $(document).ready(function() {
             namespace = '/'
             var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
-            if ({{ logged_in }}) {
+            {% if logged_in %}
                 alert("User is logged in");
-                console.log("\n\n\n\n\n\n\n\n YES loged in: JQuery")
-            } else {
+                console.log("\n\n\n\n\n\n\n\n YES loged in: JQuery");
+            {% else %}
                 alert("No One is Logged In");
-                console.log("\n\n\n\n\n\n\n\n Not loged in: JQuery")
-            }
+                console.log("\n\n\n\n\n\n\n\n Not loged in: JQuery");
+            {% endif %}
 
             // event handler for the start event
             socket.on('new_message', function(msg) {

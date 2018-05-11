@@ -14,7 +14,7 @@
         $(document).ready(function() {
             namespace = '/'
             var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
-            if {% logged_in %} {
+            if ({{ logged_in }}) {
                 alert("User is logged in");
             } else {
                 alert("No One is Logged In")

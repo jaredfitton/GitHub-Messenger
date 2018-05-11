@@ -16,6 +16,7 @@
    overflow: hidden; */
    overflow-y: auto;
    height: 10px;
+   margin-bottom: 10px;
   }
 
  #messageTable{
@@ -29,7 +30,7 @@
 
 #formtext{
     width:100%;
-    height:100px;
+    height:500px;
     /* margin-left: 10%; */
     /* margin-right: 10%; */
 }
@@ -40,7 +41,7 @@
 
 #formdiv{
     width: 100%;
-    height: 100px;
+    height: 500px;
 }
 
 #content {

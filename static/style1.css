@@ -15,6 +15,7 @@
    overflow-y: auto;
    overflow: hidden; */
    overflow-y: auto;
+   height: 10px;
   }
 
 #tablediv{

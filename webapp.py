@@ -158,7 +158,7 @@ def on_login():
     print(username + ' has entered the room.')
 
 def on_logout():
-    username = get_user_name()
+    username = session['user_data']['login']
     room = "Santa Barbara"
     leave_room(room)
     print(username + ' has left the room.')

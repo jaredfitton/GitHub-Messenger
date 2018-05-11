@@ -60,10 +60,10 @@ def home():
         return render_template('home.html')
 
 def posts_to_html(user_location):
-    print("User's location: " + user_location)
-    if user_location == "no location":
-        flash('no location set')
-        return ""
+    #print("User's location: " + user_location)
+    #if user_location == "no location":
+    #    flash('no location set')
+    #    return ""
     forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
      if user_location == "no location":
          flash('Set location in your github bio to find people!')
@@ -140,7 +140,7 @@ def authorized():
     # print("User's Name: " + get_user_name())
     # print("User's Location: " + get_user_location())
     # return render_template('home.html', past_posts = posts_to_html(get_user_location()))
-    return render_template('home.html', past_posts = posts_to_html("Santa Barbara"))
+    return render_template('home.html', past_posts = posts_to_html(get_user_location()))
 #the tokengetter is automatically called to check who is logged in.
 @github.tokengetter
 def get_github_oauth_token():

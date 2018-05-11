@@ -129,25 +129,20 @@ def authorized():
         message = 'Access denied: reason=' + request.args['error'] + ' error=' + request.args['error_description'] + ' full=' + pprint.pformat(request.args)
         return render_template('home.html')
     else:
-        # try:
+        try:
             session['github_token'] = (resp['access_token'], '') #save the token to prove that the user logged in
             session['user_data']=github.get('user').data
-            username = get_user_name()
-            print("\n\n\n\n\n\n\n\n\n\n\n\n Username:   " + username)
+            username = session['user_data']['login']
             flash('You were successfully logged in as ' + username)
             flash('logged in')
-
-            on_login()
-
-            print("User's Name: " + get_user_name())
-            print("User's Location: " + get_user_location())
+            # on_login()
             return render_template('home.html', past_posts = posts_to_html(get_user_location()))
-        # except Exception as inst:
-        #     session.clear()
-        #     print(inst)
-        #     flash('unable to login')
+        except Exception as inst:
+            session.clear()
+            print(inst)
+            flash('unable to login')
             # message='Unable to login, please try again.  '
-    # return render_template('home.html')
+    return render_template('home.html')
 
 #the tokengetter is automatically called to check who is logged in.
 @github.tokengetter
@@ -163,7 +158,7 @@ def on_login():
 def on_logout():
     username = session['user_data']['login']
     room = "Santa Barbara"
-    leave_room(room)
+    # leave_room(room)
     print(username + ' has left the room.')
 
 def get_user_location():

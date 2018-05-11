@@ -14,6 +14,12 @@
         $(document).ready(function() {
             namespace = '/'
             var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+            if {% logged_in %} {
+                alert("User is logged in");
+            } else {
+                alert("No One is Logged In")
+            }
+
             // event handler for the start event
             socket.on('new_message', function(msg) {
                 $('#log').append('<br>' + msg); //display any of the datat that the sever sent us
@@ -47,8 +53,11 @@
             <h4><small>RECENT POSTS</small></h4>
             <hr>
             <h2>Welcome</h2>
-            <h5><span class="glyphicon glyphicon-time"></span> Hometown chat</h5> {% if logged_in %}
-            <h5> <a href="/logout">logout</a></h5><br> {% else %}
+            <h5><span class="glyphicon glyphicon-time"></span> Hometown chat</h5>
+            {% if logged_in %}
+                <h5> <a href="/logout">logout</a></h5><br>
+
+            {% else %}
             <h5> <a href="/login">login</a></h5><br> {% endif %} {% if logged_in %}
             <h2>Received Messages:</h2>
             <div id="log"></div>

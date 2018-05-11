@@ -129,10 +129,10 @@ def authorized():
         message = 'Access denied: reason=' + request.args['error'] + ' error=' + request.args['error_description'] + ' full=' + pprint.pformat(request.args)
         return render_template('home.html')
     else:
-        try:
+        # try:
             session['github_token'] = (resp['access_token'], '') #save the token to prove that the user logged in
             session['user_data']=github.get('user').data
-            username = session['user_data']['login']
+            username = get_user_name()
             print("\n\n\n\n\n\n\n\n\n\n\n\n Username:   " + username)
             flash('You were successfully logged in as ' + username)
             flash('logged in')
@@ -142,12 +142,12 @@ def authorized():
             print("User's Name: " + get_user_name())
             print("User's Location: " + get_user_location())
             return render_template('home.html', past_posts = posts_to_html(get_user_location()))
-        except Exception as inst:
-            session.clear()
-            print(inst)
-            flash('unable to login')
+        # except Exception as inst:
+        #     session.clear()
+        #     print(inst)
+        #     flash('unable to login')
             # message='Unable to login, please try again.  '
-    return render_template('home.html')
+    # return render_template('home.html')
 
 #the tokengetter is automatically called to check who is logged in.
 @github.tokengetter

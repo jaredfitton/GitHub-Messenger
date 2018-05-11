@@ -100,11 +100,6 @@ def post():
     return render_template('home.html', past_posts = posts_to_html(get_user_location()))
 
 
-#redirect to GitHub's OAuth page and confirm callback URL
-@app.route('/login')
-def login():
-    print("login")
-    return github.authorize(callback=url_for('authorized', _external=True, _scheme='https')) #callback URL must match the pre-configured callback URL
 
 @app.route('/logout')
 def logout():
@@ -112,6 +107,12 @@ def logout():
     session.clear()
     flash('You were logged out')
     return render_template('home.html')
+
+#redirect to GitHub's OAuth page and confirm callback URL
+@app.route('/login')
+def login():
+    print("login")
+    return github.authorize(callback=url_for('authorized', _external=True, _scheme='https')) #callback URL must match the pre-configured callback URL
 
 @app.route('/login/authorized')
 def authorized():

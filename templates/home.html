@@ -16,8 +16,10 @@
             var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
             if ({{ logged_in }}) {
                 alert("User is logged in");
+                console.log("\n\n\n\n\n\n\n\n YES loged in: JQuery")
             } else {
-                alert("No One is Logged In")
+                alert("No One is Logged In");
+                console.log("\n\n\n\n\n\n\n\n Not loged in: JQuery")
             }
 
             // event handler for the start event

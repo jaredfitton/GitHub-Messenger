@@ -18,6 +18,11 @@
    height: 10px;
   }
 
+ #messageTable{
+     height: 10px;
+
+ }
+
 #tablediv{
     /* align-items: center; */
 }

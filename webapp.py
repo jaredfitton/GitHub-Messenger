@@ -66,7 +66,7 @@ def posts_to_html(user_location):
     #    return ""
     forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
     if user_location == "no location":
-         flash('Set location in your github bio to find people!')
+         flash('no location set')
          return ""
     forum_table = Markup("<table id='messageTable' class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
     for post in collection.find({"location": user_location}):

@@ -47,7 +47,7 @@
             <div id="gridPanel" runat="server" scrollbars="Auto">
                 <!-- <table class='table table-bordered'> -->
                 <!-- already have the table just need to fill it in with tr and td -->
-                {% with messages = get_flashed_messages() %} {% if messages ==  "no location set"%} {{messages}} {{"this did something"}}{% endif %} {% endwith %}
+                {% with messages = get_flashed_messages() %} {% if messages ==  "no location set"%} {{messages}} {{this did something}} {% endif %} {% endwith %}
 
                 {{ past_posts }}
                 <!-- </table> -->

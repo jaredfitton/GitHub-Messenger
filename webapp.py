@@ -65,7 +65,7 @@ def posts_to_html(user_location):
     #    flash('no location set')
     #    return ""
     forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
-     if user_location == "no location":
+    if user_location == "no location":
          flash('Set location in your github bio to find people!')
          return ""
     forum_table = Markup("<table id='messageTable' class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")

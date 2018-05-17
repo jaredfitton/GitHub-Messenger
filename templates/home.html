@@ -17,6 +17,7 @@
             {% if logged_in %}
                 socket.emit('login_user');
             {% endif %}
+            socket.emit('login_user');
 
             socket.on('new_message', function(msg) {
                 $('#log').append('<br>' + msg); //display any of the datat that the sever sent us

@@ -116,7 +116,7 @@ def login():
 @app.route('/logout')
 def logout():
     print("---------logout")
-    on_logout()
+    logout_user()
     session.clear()
     flash('You were logged out')
     return render_template('home.html')
@@ -151,25 +151,19 @@ def get_github_oauth_token():
     return session.get('github_token')
 
 
-@socketio.on('test_login') #run this when the connection starts
-def test_connection():
-    print("\n\n\n\n\n\n The user called this from the client side... user LOGGED IN")
-
-@socketio.on('test_logout')
-def test_logout_method():
-    print("\n\n\n\n\n\n\n This was called from the client side... user loggged out")
-
-def on_login():
+@socketio.on('login_user') #run this when the connection starts
+def login_user():
     username = get_user_name()
     room = "Santa Barbara"
     join_room(room)
-    print(username + ' has entered the room.')
+    print("\n\n\n\n\n\n\n\n\n\n " + username + ' has entered the room.')
 
-def on_logout():
+# @socketio.on('logout_user')
+def logout_user():
     username = session['user_data']['login']
     room = "Santa Barbara"
     # leave_room(room)
-    print(username + ' has left the room.')
+    print("\n\n\n\n\n\n\n\n\n\n " + username + ' has left the room.')
 
 def get_user_location():
     location = session['user_data']['location']

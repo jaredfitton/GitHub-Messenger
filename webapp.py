@@ -99,7 +99,7 @@ def post():
         print("Unable to post :(")
         print(e)
 
-    socketio.emit('new_message', message_local, room="Santa Barbara")
+    socketio.emit('new_message', message_local, room=get_user_location())
 
     return render_template('home.html', past_posts = posts_to_html(get_user_location()))
 
@@ -150,16 +150,16 @@ def get_github_oauth_token():
 @socketio.on('login_user') #run this when the connection starts
 def login_user():
     username = get_user_name()
-    room = "Santa Barbara"
+    room = get_user_location()
     join_room(room)
-    print("\n\n\n\n\n\n\n\n\n\n " + username + ' has entered the room.')
+    print("\n\n\n\n\n\n\n\n\n\n " + username + ' has entered the room: ' + room)
 
 # @socketio.on('logout_user')
 def logout_user():
-    username = session['user_data']['login']
-    room = "Santa Barbara"
-    # leave_room(room)
-    print("\n\n\n\n\n\n\n\n\n\n " + username + ' has left the room.')
+    username = get_user_name()
+    room = get_user_location()
+    #leave_room(room)
+    print("\n\n\n\n\n\n\n\n\n\n " + username + ' has left the room: ' + room)
 
 def get_user_location():
     location = session['user_data']['location']

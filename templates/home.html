@@ -20,6 +20,7 @@
 
             socket.on('new_message', function(msg) {
                 $('#log').append('<br>' + msg); //display any of the datat that the sever sent us
+                #('#post_table').find('tbody:last').append("<tr> <td> New Message </td> <td> " + msg + "</td> </tr>")
             });
         });
     </script>

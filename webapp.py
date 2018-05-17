@@ -148,7 +148,7 @@ def get_github_oauth_token():
     return session.get('github_token')
 
 @socketio.on('login_user') #run this when the connection starts
-def login_user():
+def add_user_to_room():
     print("\n\n\n\n\n\n\n\n\n\n login method called")
     username = get_user_name()
     room = get_user_location()

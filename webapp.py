@@ -49,7 +49,7 @@ github = oauth.remote_app(
 @app.context_processor
 def inject_logged_in():
     # print("logged in")
-    return {"logged_in":('github_token' in session)}
+    return {"logged_in":('github_token' in session), "location_set":('location' in session)}
     # return {"logged_in": True}
 
 @app.route('/')
@@ -126,6 +126,7 @@ def authorized():
         try:
             session['github_token'] = (resp['access_token'], '') #save the token to prove that the user logged in
             session['user_data']=github.get('user').data
+            session['location']=get_user_location()
             flash('You were successfully logged in as ' + session['user_data']['login'])
             flash('logged in')
             # message='You were successfully logged in as ' + session['user_data']['login']

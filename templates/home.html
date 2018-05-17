@@ -16,9 +16,10 @@
             var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
             {% if logged_in %}
                 console.log("\n\n\n\n\n\n\n\n YES loged in: JQuery");
-                socket.emit('test_login')
+                socket.emit('test_login');
             {% else %}
                 console.log("\n\n\n\n\n\n\n\n Not loged in: JQuery");
+                socket.emit('test_logout');
             {% endif %}
             // event handler for the start event
             socket.on('new_message', function(msg) {

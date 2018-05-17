@@ -153,7 +153,11 @@ def get_github_oauth_token():
 
 @socketio.on('test_login') #run this when the connection starts
 def test_connection():
-    print("\n\n\n\n\n\n The user called this from the client side")
+    print("\n\n\n\n\n\n The user called this from the client side... user LOGGED IN")
+
+@socketio.on('test_logout')
+def test_logout_method():
+    print("\n\n\n\n\n\n\n This was called from the client side... user loggged out")
 
 def on_login():
     username = get_user_name()

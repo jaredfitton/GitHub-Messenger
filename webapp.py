@@ -150,6 +150,11 @@ def authorized():
 def get_github_oauth_token():
     return session.get('github_token')
 
+
+@socketio.on('test_login') #run this when the connection starts
+def test_connection():
+    print("\n\n\n\n\n\n The user called this from the client side")
+
 def on_login():
     username = get_user_name()
     room = "Santa Barbara"

@@ -100,6 +100,7 @@ def post():
         print(e)
 
     socketio.emit('new_message', message_local, room=get_user_location())
+    socketio.emit('new_message', message_local)
 
     return render_template('home.html', past_posts = posts_to_html(get_user_location()))
 

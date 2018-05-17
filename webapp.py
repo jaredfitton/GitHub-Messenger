@@ -99,8 +99,7 @@ def post():
         print("Unable to post :(")
         print(e)
 
-    socketio.emit('new_message', message_local, room=get_user_location())
-    # socketio.emit('new_message', message_local)
+    socketio.emit('new_message', {"username": username_local, "message": message_local}, room=get_user_location())
 
     return render_template('home.html', past_posts = posts_to_html(get_user_location()))
 

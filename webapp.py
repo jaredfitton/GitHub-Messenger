@@ -49,8 +49,6 @@ github = oauth.remote_app(
 #Create and set a global variable for the name of you JSON file here.  The file will be created on Heroku, so you don't need to make it in GitHub
 
 
-
-
 @app.context_processor
 def inject_logged_in():
     return {"logged_in":('github_token' in session)}
@@ -68,13 +66,13 @@ def posts_to_html(user_location):
     if user_location == "no location":
         flash("Set location in your github bio to find people!")
         return ""
-    forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
+    forum_table = Markup("<table id='post_table' class='table table-bordered'> <tbody> <tr> <th> Username </th> <th> Message </th> </tr>")
     for post in collection.find({"location": user_location}):
         try:
             forum_table += Markup("<tr> <td>" + post["username"] + "</td> <td>" + post["message"] + "</td> </tr>")
         except Exception as e:
             print(e)
-    forum_table += Markup("</table>")
+    forum_table += Markup("</tbody> </table>")
     return forum_table
 
 #Use this method to delete messages
@@ -102,7 +100,6 @@ def post():
         print(e)
 
     socketio.emit('new_message', message_local, room="Santa Barbara")
-    # socketio.emit('new_message', message_local)
 
     return render_template('home.html', past_posts = posts_to_html(get_user_location()))
 

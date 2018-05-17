@@ -55,7 +55,8 @@
             <br><br>
 
             <div id="formdiv">
-              {% with messages = get_flashed_messages() %} {% if messages == 'no location set' %}
+              <!---{% with messages = get_flashed_messages() %} {% if messages == 'no location set' %}-->
+              {% if check %}
                 <h4> Set location in your github bio to find people! </h4>
               {% else %}
                 <h4>Post to the Group</h4>

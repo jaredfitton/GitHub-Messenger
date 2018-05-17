@@ -62,6 +62,7 @@ def home():
 def posts_to_html(user_location):
     if user_location == "no location":
          flash('no location set')
+         print('no location set')
          return ""
     forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
     forum_table = Markup("<table id='messageTable' class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")

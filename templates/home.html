@@ -19,7 +19,6 @@
             {% endif %}
 
             socket.on('new_message', function(msg) {
-                $('#log').append('<br>' + msg["message"]); //display any of the datat that the sever sent us
                 $('#post_table').find('tbody:last').append("<tr> <td> " + msg["username"] + " </td> <td> " + msg["message"] + "</td> </tr>");
             });
         });
@@ -48,7 +47,6 @@
 
 
         <div class="col-sm-9">
-            <h4><small>RECENT POSTS</small></h4>
             <hr>
             <h2>Welcome</h2>
             <h5><span class="glyphicon glyphicon-time"></span> Hometown chat</h5>

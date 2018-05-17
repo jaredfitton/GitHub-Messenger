@@ -147,7 +147,7 @@ def authorized():
 def get_github_oauth_token():
     return session.get('github_token')
 
-@socketio.on('login_user') #run this when the connection starts
+@socketio.on('login_user'): #run this when the connection starts
 def login_user():
     username = get_user_name()
     room = get_user_location()

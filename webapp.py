@@ -101,8 +101,8 @@ def post():
         print("Unable to post :(")
         print(e)
 
-    # socketio.emit('new_message', message_local, room="Santa Barbara")
-    socketio.emit('new_message', message_local)
+    socketio.emit('new_message', message_local, room="Santa Barbara")
+    # socketio.emit('new_message', message_local)
 
     return render_template('home.html', past_posts = posts_to_html(get_user_location()))
 
@@ -149,7 +149,6 @@ def authorized():
 @github.tokengetter
 def get_github_oauth_token():
     return session.get('github_token')
-
 
 @socketio.on('login_user') #run this when the connection starts
 def login_user():

@@ -50,6 +50,8 @@
               {% with messages = get_flashed_messages() %} {% if messages == 'no location set'%} {{messages}} {% endif %} {% endwith %}
 
                 {{ past_posts }}
+
+            {% endif %}
                 <!-- </table> -->
             </div>
             <br><br>
@@ -65,7 +67,7 @@
                     <br>
                     <input type="submit" value="Post" id="postbutton">
                 </form>
-                <br><br> {% endif %} 
+                <br><br> {% endif %}
             </div>
 
 

@@ -29,7 +29,8 @@
                     <li><a href="#section3">Group3</a></li>
                     <li><a href="#section3">Group3</a></li>
                 </ul><br>
-                <p>{% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %} {{ message }} {% endfor %} {% endif %} {% endwith %} {% block body %}{% endblock %}
+                <p>
+                    {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %} {{ message }} {% endfor %} {% endif %} {% endwith %} {% block body %}{% endblock %}
                 </p>
             </div>
 
@@ -75,8 +76,9 @@
                 <!-- <br><br> {% endif %}   {% endif %} -->
             </div>
 
-                <br><br> {% endif %}
-            </div>{% endif %}
+                <!-- <br><br> {% endif %} -->
+            </div>
+            <!-- {% endif %} -->
           </div>
 
 

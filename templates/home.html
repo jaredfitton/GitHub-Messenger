@@ -47,7 +47,7 @@
             <div id="gridPanel" runat="server" scrollbars="Auto">
                 <!-- <table class='table table-bordered'> -->
                 <!-- already have the table just need to fill it in with tr and td -->
-              <p>  {% with messages = get_flashed_messages() %} {% if messages == 'no location set'%} {{messages}} {% endif %} {% endwith %}</p>
+              {% with messages = get_flashed_messages() %} {% if messages == 'no location set'%} {{messages}} {% endif %} {% endwith %}
 
                 {{ past_posts }}
                 <!-- </table> -->
@@ -56,7 +56,7 @@
 
             <div id="formdiv">
               <!---{% with messages = get_flashed_messages() %} {% if messages == 'no location set' %}-->
-              {% endwith %}{% if location_set %}
+              {% if location_set %}
                 <h4> Set location in your github bio to find people! </h4>
               {% else %}
                 <h4>Post to the Group</h4>

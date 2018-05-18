@@ -57,16 +57,16 @@
 
             <div id="formdiv">
               <!---{% with messages = get_flashed_messages() %} {% if messages == 'no location set' %}-->
-              {% if location_set %}
+              <!-- {% if location_set %} -->
                 <h4> Set location in your github bio to find people! </h4>
-              {% else %}
+              <!-- {% else %} -->
                 <h4>Post to the Group</h4>
                 <form action='/posted' method="post">
                     <textarea id="formtext" name="message"></textarea>
                     <br>
                     <input type="submit" value="Post" id="postbutton">
                 </form>
-                <br><br> {% endif %}   {% endif %}
+                <!-- <br><br> {% endif %}   {% endif %} -->
             </div>
 
 

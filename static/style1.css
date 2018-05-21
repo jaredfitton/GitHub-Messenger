@@ -6,15 +6,22 @@
 
 #gridPanel
 {
-   top: expression(document.getElementById("gridPanel").scrollTop-2);
+   /* top: expression(document.getElementById("gridPanel").scrollTop-2);
    left:expression(parentNode.parentNode.parentNode.parentNode.scrollLeft);
    position: relative;
    z-index: 20;
    width: 100%;
    height: 200px;
    overflow-y: auto;
-   overflow: hidden;
+   overflow: hidden; */
+   overflow-y: auto;
+   height: 35%;
+   margin-bottom: 10px;
   }
+
+ #messageTable {
+
+ }
 
 #tablediv{
     /* align-items: center; */
@@ -29,12 +36,11 @@
 
 #postbutton{
     margin-left: 46%;
-    text-decoration-color: green;
 }
 
 #formdiv{
     width: 100%;
-    height: 100px;
+    height: 500px;
 }
 
 #content {
@@ -46,14 +52,16 @@
 }
 
 .sidenav {
-    background-color: #f1f1f1;
+    /* background-color: #f1f1f1; */
+    background-color: black;
     height: 100%;
 }
 /* Set black background color, white text and some padding */
 
-footer {
-    background-color: #555;
-    color: white;
+#footer{
+    /* background-color: #555; */
+    background-color: green;
+    color: green;
     padding: 15px;
 }
 /* On small screens, set height to 'auto' for sidenav and grid */

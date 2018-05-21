@@ -1,7 +1,5 @@
 from flask import Flask, redirect, url_for, session, request, jsonify, Markup, flash, render_template
 from flask_oauthlib.client import OAuth
-from flask_socketio import SocketIO, emit, join_room, leave_room, close_room, rooms, disconnect
-from threading import Lock
 
 import pymongo
 import pprint
@@ -14,9 +12,8 @@ os.system("echo '[]'>" + 'forum.json')
 # os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 app = Flask(__name__)
-socketio = SocketIO(app, async_mode=None)
 
-# app.debug = True #Change this to False for production
+app.debug = True #Change this to False for production
 
 app.secret_key = os.environ['SECRET_KEY'] #used to sign session cookies
 oauth = OAuth(app)
@@ -51,7 +48,8 @@ github = oauth.remote_app(
 
 @app.context_processor
 def inject_logged_in():
-    return {"logged_in":('github_token' in session)}
+    # print("logged in")
+    return {"logged_in":('github_token' in session), "location_set":('location' in session)}
     # return {"logged_in": True}
 
 @app.route('/')
@@ -59,20 +57,21 @@ def home():
     if 'github_token' in session:
         return render_template('home.html', past_posts=posts_to_html(get_user_location()))
     else:
-        return render_template('home.html', async_mode=socketio.async_mode)
+        return render_template('home.html')
 
 def posts_to_html(user_location):
-    print("User's location: " + user_location)
     if user_location == "no location":
-        flash("Set location in your github bio to find people!")
+        flash('no location set')
+        print('no location set')
         return ""
-    forum_table = Markup("<table id='post_table' class='table table-bordered'> <tbody> <tr> <th> Username </th> <th> Message </th> </tr>")
+    forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
+    forum_table = Markup("<table id='messageTable' class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
     for post in collection.find({"location": user_location}):
         try:
             forum_table += Markup("<tr> <td>" + post["username"] + "</td> <td>" + post["message"] + "</td> </tr>")
         except Exception as e:
             print(e)
-    forum_table += Markup("</tbody> </table>")
+    forum_table += Markup("</table>")
     return forum_table
 
 #Use this method to delete messages
@@ -99,24 +98,22 @@ def post():
         print("Unable to post :(")
         print(e)
 
-    socketio.emit('new_message', {"username": username_local, "message": message_local}, room=get_user_location())
-
     return render_template('home.html', past_posts = posts_to_html(get_user_location()))
 
+
+
+@app.route('/logout')
+def logout():
+    print("---------logout")
+    session.clear()
+    flash('You were logged out')
+    return render_template('home.html')
 
 #redirect to GitHub's OAuth page and confirm callback URL
 @app.route('/login')
 def login():
     print("login")
     return github.authorize(callback=url_for('authorized', _external=True, _scheme='https')) #callback URL must match the pre-configured callback URL
-
-@app.route('/logout')
-def logout():
-    print("---------logout")
-    logout_user()
-    session.clear()
-    flash('You were logged out')
-    return render_template('home.html')
 
 @app.route('/login/authorized')
 def authorized():
@@ -125,42 +122,23 @@ def authorized():
     if resp is None:
         session.clear()
         message = 'Access denied: reason=' + request.args['error'] + ' error=' + request.args['error_description'] + ' full=' + pprint.pformat(request.args)
-        return render_template('home.html')
     else:
         try:
             session['github_token'] = (resp['access_token'], '') #save the token to prove that the user logged in
             session['user_data']=github.get('user').data
-            username = session['user_data']['login']
-            flash('You were successfully logged in as ' + username)
+            session['location']=get_user_location()
+            flash('You were successfully logged in as ' + session['user_data']['login'])
             flash('logged in')
-            # on_login()
-            return render_template('home.html', past_posts = posts_to_html(get_user_location()))
+            # message='You were successfully logged in as ' + session['user_data']['login']
         except Exception as inst:
             session.clear()
             print(inst)
             flash('unable to login')
-            # message='Unable to login, please try again.  '
-    return render_template('home.html')
-
+    return render_template('home.html', past_posts = posts_to_html(get_user_location()))
 #the tokengetter is automatically called to check who is logged in.
 @github.tokengetter
 def get_github_oauth_token():
     return session.get('github_token')
-
-@socketio.on('login_user') #run this when the connection starts
-def add_user_to_room():
-    print("\n\n\n\n\n\n\n\n\n\n login method called")
-    username = get_user_name()
-    room = get_user_location()
-    join_room(room)
-    print("\n\n\n\n\n\n\n\n\n\n " + username + ' has entered the room: ' + room)
-
-# @socketio.on('logout_user')
-def logout_user():
-    username = get_user_name()
-    room = get_user_location()
-    #leave_room(room)
-    print("\n\n\n\n\n\n\n\n\n\n " + username + ' has left the room: ' + room)
 
 def get_user_location():
     location = session['user_data']['location']
@@ -169,7 +147,7 @@ def get_user_location():
     return "no location"
 
 def get_user_name():
-    return str(session['user_data']['login'])
+    return str(session['user_data']['name'])
 
 if __name__ == '__main__':
-    socketio.run()
+    app.run()

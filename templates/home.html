@@ -47,12 +47,9 @@
             <h5><span class="glyphicon glyphicon-time"></span> Hometown chat</h5>
             {% if logged_in %}
                 <h5> <a href="/logout">logout</a></h5><br>
-                <!-- <div id="gridPanel" runat="server" scrollbars="Auto"> -->
                 <div class="pre-scrollable">
                      {{ past_posts }}
                 </div>
-                <!-- </div> -->
-                <br><br>
                 <div id="formdiv">
                     {% if location_set %}
                         <h4>Post to the Group</h4>

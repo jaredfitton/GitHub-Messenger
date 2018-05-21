@@ -48,6 +48,12 @@
      margin-left: 20px;
 }
 
+#messageTable {
+    overflow-y:scroll;
+    height:300px;
+    display:block;
+}
+
 .row.content {
     height: 1500px
 }

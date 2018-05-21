@@ -30,7 +30,13 @@
                     <li><a href="#section3">Group3</a></li>
                 </ul><br>
                 <p>
-                    <!-- {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %} {{ message }} {% endfor %} {% endif %} {% endwith %} {% block body %}{% endblock %} -->
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                {{ message }}
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
                 </p>
             </div>
 
@@ -42,43 +48,33 @@
             <hr>
             <h2>Welcome</h2>
             <h5><span class="glyphicon glyphicon-time"></span> Hometown chat</h5>
-            <!-- {% if logged_in %} -->
-            <h5> <a href="/logout">logout</a></h5><br>
-            <!-- {% else %} -->
-            <p> </p>
-            <h5> <a href="/login">login</a></h5><br>
-            <!-- {% endif %} -->
-             <!-- {% if logged_in %} -->
-            <div id="gridPanel" runat="server" scrollbars="Auto">
-                <!-- <table class='table table-bordered'> -->
-                <!-- already have the table just need to fill it in with tr and td -->
-
-                <!--  {{ past_posts }} -->
-
-
-
-
-                <!-- </table> -->
-            </div>
-            <br><br>
-
-            <div id="formdiv">
-              <!---{% with messages = get_flashed_messages() %} {% if messages == 'no location set' %}-->
-              <!-- {% if location_set %} -->
-                <h4> Set location in your github bio to find people! </h4>
-              <!-- {% else %} -->
-                <h4>Post to the Group</h4>
-                <form action='/posted' method="post">
-                    <textarea id="formtext" name="message"></textarea>
-                    <br>
-                    <input type="submit" value="Post" id="postbutton">
-                </form>
-                <!-- <br><br> {% endif %}   {% endif %} -->
-            </div>
-
-                <!-- <br><br> {% endif %} -->
-            </div>
-            <!-- {% endif %} -->
+            {% if logged_in %}
+                <h5> <a href="/logout">logout</a></h5><br>
+                <div id="gridPanel" runat="server" scrollbars="Auto">
+                     {{ past_posts }}
+                </div>
+                <br><br>
+                <div id="formdiv">
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages == 'no location set' %}
+                            {% if location_set %}
+                                <h4> Set location in your github bio to find people! </h4>
+                            {% else %}
+                                <h4>Post to the Group</h4>
+                                <form action='/posted' method="post">
+                                    <textarea id="formtext" name="message"></textarea>
+                                    <br>
+                                    <input type="submit" value="Post" id="postbutton">
+                                </form>
+                                <br><br>
+                            {% endif %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            {% else %}
+                <p> </p>
+                <h5> <a href="/login">login</a></h5><br>
+            {% endif %}
           </div>
 
 

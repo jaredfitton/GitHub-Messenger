@@ -40,9 +40,6 @@
                 </p>
             </div>
 
-
-
-
         <div class="col-sm-9">
             <h4><small>RECENT POSTS</small></h4>
             <hr>
@@ -50,9 +47,11 @@
             <h5><span class="glyphicon glyphicon-time"></span> Hometown chat</h5>
             {% if logged_in %}
                 <h5> <a href="/logout">logout</a></h5><br>
-                <div id="gridPanel" runat="server" scrollbars="Auto">
+                <!-- <div id="gridPanel" runat="server" scrollbars="Auto"> -->
+                <div class="pre-scrollable">
                      {{ past_posts }}
                 </div>
+                <!-- </div> -->
                 <br><br>
                 <div id="formdiv">
                     {% if location_set %}

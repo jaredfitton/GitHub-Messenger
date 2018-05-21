@@ -20,8 +20,7 @@
   }
 
  #messageTable {
-     height: 10px;
-     width: 100%;
+
  }
 
 #tablediv{
@@ -30,7 +29,7 @@
 
 #formtext{
     width:100%;
-    height:250px;
+    height:150px;
     /* margin-left: 10%; */
     /* margin-right: 10%; */
 }

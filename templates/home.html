@@ -56,6 +56,10 @@
             <h2>Welcome</h2>
             <h5><span class="glyphicon glyphicon-time"></span> Hometown chat</h5>
             {% if logged_in %}
+                <h5> <a href="/logout">logout</a></h5><br> {% else %}
+                <p> </p>
+                <h5> <a href="/login">login</a></h5><br> {% endif %}
+            {% if logged_in %}
                 <div class="pre-scrollable">
                      {{ past_posts }}
                 </div>

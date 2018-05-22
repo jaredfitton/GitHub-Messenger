@@ -9,3 +9,4 @@ Flask-OAuthlib
 Flask-PyMongo
 pymongo
 flask_socketio
+eventlet

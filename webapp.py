@@ -138,7 +138,10 @@ def authorized():
     # print("User's Name: " + get_user_name())
     # print("User's Location: " + get_user_location())
     # return render_template('home.html', past_posts = posts_to_html(get_user_location()))
-    return render_template('home.html', past_posts = posts_to_html(get_user_location()))
+
+    #redirect instead of rendering
+    #return render_template('home.html', past_posts = posts_to_html(get_user_location()))
+    return redirect(url_for('home',past_posts = posts_to_html(get_user_location())))
 #the tokengetter is automatically called to check who is logged in.
 @github.tokengetter
 def get_github_oauth_token():

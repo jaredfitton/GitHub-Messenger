@@ -126,7 +126,7 @@ def authorized():
         try:
             session['github_token'] = (resp['access_token'], '') #save the token to prove that the user logged in
             session['user_data']=github.get('user').data
-            session['location']=get_user_location()
+            #session['location']=get_user_location()
             flash('You were successfully logged in as ' + session['user_data']['login'])
             flash('logged in')
             # message='You were successfully logged in as ' + session['user_data']['login']
@@ -151,7 +151,9 @@ def get_github_oauth_token():
 def get_user_location():
     location = session['user_data']['location']
     if isinstance(location, str):
+        session['location']=True
         return location.lower()
+    session['location']=False
     return "no location"
 
 def get_user_name():

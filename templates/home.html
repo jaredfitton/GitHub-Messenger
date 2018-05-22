@@ -40,9 +40,6 @@
                 </p>
             </div>
 
-
-
-
         <div class="col-sm-9">
             <h4><small>RECENT POSTS</small></h4>
             <hr>
@@ -50,27 +47,21 @@
             <h5><span class="glyphicon glyphicon-time"></span> Hometown chat</h5>
             {% if logged_in %}
                 <h5> <a href="/logout">logout</a></h5><br>
-                <div id="gridPanel" runat="server" scrollbars="Auto">
+                <div class="pre-scrollable">
                      {{ past_posts }}
                 </div>
-                <br><br>
                 <div id="formdiv">
-                    {% with messages = get_flashed_messages() %}
-                        {% if messages == 'no location set' %}
-                            {% if location_set %}
-                                <h4> Set location in your github bio to find people! </h4>
-                                
-                            {% else %}
-                                <h4>Post to the Group</h4>
-                                <form action='/posted' method="post">
-                                    <textarea id="formtext" name="message"></textarea>
-                                    <br>
-                                    <input type="submit" value="Post" id="postbutton">
-                                </form>
-                                <br><br>
-                            {% endif %}
-                        {% endif %}
-                    {% endwith %}
+                    {% if location_set %}
+                        <h4>Post to the Group</h4>
+                        <form action='/posted' method="post">
+                            <textarea id="formtext" name="message"></textarea>
+                            <br>
+                            <input type="submit" value="Post" id="postbutton">
+                        </form>
+                        <br><br>
+                    {% else %}
+                        <h4> Set location in your github bio to find people! </h4>
+                    {% endif %}
                 </div>
             {% else %}
                 <p> </p>

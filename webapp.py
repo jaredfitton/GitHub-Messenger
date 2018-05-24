@@ -53,7 +53,7 @@ def inject_logged_in():
     #    return {"logged_in":('github_token' in session), "location_set":(False)}
     #return {"logged_in":('github_token' in session), "location_set":(True)}
     return {"logged_in":('github_token' in session), "location_set":('location' in session)}
-    # return {"logged_in": True}
+    # #return {"logged_in": True}
 
 @app.route('/')
 def home():

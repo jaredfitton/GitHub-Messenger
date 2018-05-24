@@ -56,21 +56,6 @@
                 <h5> <a href="/login">login</a></h5><br> {% endif %} {% if logged_in %}
                 <div class="pre-scrollable" id="gridPanel">
                     <!--div that holds the scroll -->
-                    <script>
-                        var scroll = document.getElementById("gridPanel");
-                        var c = 0;
-                        var add = setInterval(function() {
-                            // allow 1px inaccuracy by adding 1
-                            var isScrolledToBottom = scroll.scrollHeight - .clientHeight <= scroll.scrollTop + 1;
-                            console.log(scroll.scrollHeight - scroll.clientHeight, scroll.scrollTop + 1);
-                            var newElement = document.createElement("div");
-                            newElement.innerHTML = c++;
-                            scroll.appendChild(newElement);
-                            // scroll to bottom if isScrolledToBotto
-                            if (isScrolledToBottom)
-                                scroll.scrollTop = scroll.scrollHeight - scroll.clientHeight;
-                        }, 1000);
-                    </script>
                     {{ past_posts }}
                 </div>
                 <div id="formdiv">

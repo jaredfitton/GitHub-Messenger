@@ -152,8 +152,10 @@ def get_user_location():
     location = session['user_data']['location']
     if isinstance(location, str):
         session['location']=True
+        print(session['location'])
         return location.lower()
     session['location']=False
+    print(session['location'])
     return "no location"
 
 def get_user_name():

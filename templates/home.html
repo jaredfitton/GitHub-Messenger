@@ -61,7 +61,7 @@
                 <p> </p>
                 <h5> <a href="/login">login</a></h5><br> {% endif %}
             {% if logged_in %}
-                <div class="pre-scrollable">
+                <div class="pre-scrollable" id = "gridPanel"> <!--div that holds the scroll -->
                      {{ past_posts }}
                 </div>
                 <div id="formdiv">
@@ -84,9 +84,7 @@
 
 
 
-     <footer class="container-fluid" id="footer">
-                    <p>Made in America</p>
-                </footer>
+
 
 </body>
 

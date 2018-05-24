@@ -9,14 +9,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
-    <link href="{{ url_for('static', filename='style1.css') }}"  rel="stylesheet" type="text/css"></link>
+    <link href="{{ url_for('static', filename='style1.css') }}" rel="stylesheet" type="text/css"></link>
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
             namespace = '/'
-            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
-            {% if logged_in %}
-                socket.emit('login_user');
-            {% endif %}
+            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace); { %
+                if logged_in %
+            }
+            socket.emit('login_user'); { % endif %
+            }
 
             socket.on('new_message', function(msg) {
                 $('#post_table').find('tbody:last').append("<tr> <td> " + msg["username"] + " </td> <td> " + msg["message"] + "</td> </tr>");
@@ -40,47 +41,53 @@
                     <li><a href="#section3">Group3</a></li>
                 </ul><br>
                 <p>
-                    {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                            {% for message in messages %}
-                                {{ message }}
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
+                    {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %} {{ message }} {% endfor %} {% endif %} {% endwith %}
                 </p>
             </div>
 
 
-        <div class="col-sm-9">
-            <h4><small>RECENT POSTS</small></h4>
-            <hr>
-            <h2>Welcome</h2>
-            <h5><span class="glyphicon glyphicon-time"></span> Hometown chat</h5>
-            {% if logged_in %}
+            <div class="col-sm-9">
+                <h4><small>RECENT POSTS</small></h4>
+                <hr>
+                <h2>Welcome</h2>
+                <h5><span class="glyphicon glyphicon-time"></span> Hometown chat</h5> {% if logged_in %}
                 <h5> <a href="/logout">logout</a></h5><br> {% else %}
                 <p> </p>
-                <h5> <a href="/login">login</a></h5><br> {% endif %}
-            {% if logged_in %}
-                <div class="pre-scrollable" id = "gridPanel"> <!--div that holds the scroll -->
-                     {{ past_posts }}
+                <h5> <a href="/login">login</a></h5><br> {% endif %} {% if logged_in %}
+                <div class="pre-scrollable" id="gridPanel">
+                    <!--div that holds the scroll -->
+                    <script>
+                        var scroll = document.getElementById("gridPanel");
+                        var c = 0;
+                        var add = setInterval(function() {
+                            // allow 1px inaccuracy by adding 1
+                            var isScrolledToBottom = scroll.scrollHeight - .clientHeight <= scroll.scrollTop + 1;
+                            console.log(scroll.scrollHeight - scroll.clientHeight, scroll.scrollTop + 1);
+                            var newElement = document.createElement("div");
+                            newElement.innerHTML = c++;
+                            scroll.appendChild(newElement);
+                            // scroll to bottom if isScrolledToBotto
+                            if (isScrolledToBottom)
+                                scroll.scrollTop = scroll.scrollHeight - scroll.clientHeight;
+                        }, 1000);
+                    </script>
+                    {{ past_posts }}
                 </div>
                 <div id="formdiv">
                     {% if location_set %}
-                        <h4>Post to the Group</h4>
-                        <form action='/posted' method="post">
-                            <textarea id="formtext" name="message"></textarea>
-                            <br>
-                            <input type="submit" value="Post" id="postbutton">
-                        </form>
-                        <br><br>
-                    {% else %}
-                        <h4> Set location in your github bio to find people! </h4>
-                    {% endif %}
+                    <h4>Post to the Group</h4>
+                    <form action='/posted' method="post">
+                        <textarea id="formtext" name="message"></textarea>
+                        <br>
+                        <input type="submit" value="Post" id="postbutton">
+                    </form>
+                    <br><br> {% else %}
+                    <h4> Set location in your github bio to find people! </h4> {% endif %}
                 </div>
-            {% else %}
+                {% else %}
                 <p> </p>
-            {% endif %}
-          </div>
+                {% endif %}
+            </div>
 
 
 

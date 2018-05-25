@@ -4,9 +4,10 @@
     position: relative;
 } */
 
-th{
+tablehead{
     text-align: right;
     color: green;
+    position: sticky;
 }
 
 #gridPanel

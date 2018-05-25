@@ -63,6 +63,7 @@ def home():
         return render_template('home.html')
 
 def posts_to_html(user_location):
+    forum_table = Markup("<tr><td></td></tr>")
     if user_location == "no location":
         flash('no location set')
         print('no location set')

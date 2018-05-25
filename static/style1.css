@@ -14,7 +14,8 @@
    height: 200px;
    overflow-y: auto;
    overflow: hidden; */
-   position: relative; bottom: 0;
+   position: absolute; bottom: 0;
+   
    overflow-y: auto;
    height: 35%;
    margin-bottom: 10px;

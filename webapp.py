@@ -71,10 +71,9 @@ def posts_to_html(user_location):
         return ""
     # forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
     try:
-
-    for post in collection.find({"location": user_location}):
-        forum_table = Markup( "<tr> <td>" + post["username"] + "</td> <td>" + post["message"] + "</td> </tr>") + forum_table
-    forum_table = Markup("<table id='messageTable' class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>") + forum_table
+        for post in collection.find({"location": user_location}):
+            forum_table = Markup( "<tr> <td>" + post["username"] + "</td> <td>" + post["message"] + "</td> </tr>") + forum_table
+        forum_table = Markup("<table id='messageTable' class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>") + forum_table
 
     except Exception as e:
         print(e)

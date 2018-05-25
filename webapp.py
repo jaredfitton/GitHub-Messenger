@@ -73,8 +73,7 @@ def posts_to_html(user_location):
     try:
         for post in collection.find({"location": user_location}):
             forum_table = Markup( "<tr> <td>" + post["username"] + "</td> <td>" + post["message"] + "</td> </tr>") + forum_table
-        # forum_table = Markup("<table id='messageTable' class='table table-bordered'> <tr> <th id='tablehead'> Username </th> <th> Message </th> </tr>") + forum_table
-        forum_table = Markup("<table id ='messageTable' class=' table table_bordered'> <th> Table attribute name <div>Table attribute name</div> </th> <th>  Value <div>Value</div> </th> <th> Description <div>Description</div> </th> </tr> </thead>") + forum_table
+        forum_table = Markup("<table id='messageTable' class='table table-bordered'> <tr> <th id='tablehead'> Username </th> <th> Message </th> </tr>") + forum_table
 >
 
     except Exception as e:

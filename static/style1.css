@@ -4,26 +4,7 @@
     position: relative;
 } */
 
-tablehead{
-    text-align: right;
-    color: green;
-    /* position: sticky; */
-}
 
-th div {
-  position: absolute;
-  top: 0;
-  left: auto;
-  width: 25vw;
-  background: gray;
-}
-
-tr {
-  display: table;
-  border-collapse: collapse;
-  width: 75vw;
-  table-layout: fixed;
-}
 
 #gridPanel
 {

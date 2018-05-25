@@ -49,8 +49,11 @@ github = oauth.remote_app(
 @app.context_processor
 def inject_logged_in():
     # print("logged in")
+    #if get_user_location()=="no location":
+    #    return {"logged_in":('github_token' in session), "location_set":(False)}
+    #return {"logged_in":('github_token' in session), "location_set":(True)}
     return {"logged_in":('github_token' in session), "location_set":('location' in session)}
-    # return {"logged_in": True}
+    # #return {"logged_in": True}
 
 @app.route('/')
 def home():
@@ -151,7 +154,9 @@ def get_github_oauth_token():
 def get_user_location():
     location = session['user_data']['location']
     if isinstance(location, str):
+        #session['location_set']=True
         return location.lower()
+    #session['location_set']=False
     return "no location"
 
 def get_user_name():

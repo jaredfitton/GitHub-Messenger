@@ -49,8 +49,11 @@ github = oauth.remote_app(
 @app.context_processor
 def inject_logged_in():
     # print("logged in")
+    #if get_user_location()=="no location":
+    #    return {"logged_in":('github_token' in session), "location_set":(False)}
+    #return {"logged_in":('github_token' in session), "location_set":(True)}
     return {"logged_in":('github_token' in session), "location_set":('location' in session)}
-    # return {"logged_in": True}
+    # #return {"logged_in": True}
 
 @app.route('/')
 def home():
@@ -60,17 +63,20 @@ def home():
         return render_template('home.html')
 
 def posts_to_html(user_location):
+    forum_table=""
+    # forum_table = Markup("<tr><td></td></tr>")
     if user_location == "no location":
         flash('no location set')
         print('no location set')
         return ""
-    forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
-    forum_table = Markup("<table id='messageTable' class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
-    for post in collection.find({"location": user_location}):
-        try:
-            forum_table += Markup("<tr> <td>" + post["username"] + "</td> <td>" + post["message"] + "</td> </tr>")
-        except Exception as e:
-            print(e)
+    # forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
+    try:
+        for post in collection.find({"location": user_location}):
+            forum_table = Markup( "<tr> <td>" + post["username"] + "</td> <td>" + post["message"] + "</td> </tr>") + forum_table
+        forum_table = Markup("<table id='messageTable' class='table table-bordered'> <tr> <th id='tablehead'> Username </th> <th> Message </th> </tr>") + forum_table
+
+    except Exception as e:
+        print(e)
     forum_table += Markup("</table>")
     return forum_table
 
@@ -151,11 +157,9 @@ def get_github_oauth_token():
 def get_user_location():
     location = session['user_data']['location']
     if isinstance(location, str):
-        session['location']=True
-        print("-----" + str(session['location']))
+        #session['location_set']=True
         return location.lower()
-    session['location']=False
-    print("----" + str(session['location'])
+    #session['location_set']=False
     return "no location"
 
 def get_user_name():

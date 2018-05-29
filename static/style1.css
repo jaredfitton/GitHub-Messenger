@@ -4,6 +4,8 @@
     position: relative;
 } */
 
+
+
 #gridPanel
 {
    /* top: expression(document.getElementById("gridPanel").scrollTop-2);
@@ -14,6 +16,7 @@
    height: 200px;
    overflow-y: auto;
    overflow: hidden; */
+   position: absolute; bottom: 0;
    overflow-y: auto;
    height: 35%;
    margin-bottom: 10px;

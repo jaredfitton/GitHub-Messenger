@@ -10,8 +10,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
     <link href="{{ url_for('static', filename='style1.css') }}" rel="stylesheet" type="text/css"></link>
-    <script type="text/javascript" charset="utf-8">
-        $(document).ready(function() {
+    <!--<script type="text/javascript" charset="utf-8">
+
+          $(document).ready(function() {
             namespace = '/'
             var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace); { %
                 if logged_in %
@@ -22,7 +23,7 @@
                 $('#post_table').find('tbody:last').append("<tr> <td> " + msg["username"] + " </td> <td> " + msg["message"] + "</td> </tr>");
             });
         });
-    </script>
+    </script>-->
 </head>
 
 <body>

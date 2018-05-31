@@ -14,11 +14,10 @@
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
             namespace = '/'
-            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace); { %
-                if logged_in %
-            }
-            socket.emit('login_user'); { % endif %
-            }
+            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+            {% if logged_in %}
+                socket.emit('login_user'); 
+            { % endif %}
 
             socket.on('new_message', function(msg) {
                 console.log(msg)

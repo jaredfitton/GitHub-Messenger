@@ -10,20 +10,24 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
     <link href="{{ url_for('static', filename='style1.css') }}" rel="stylesheet" type="text/css"></link>
-    <!--<script type="text/javascript" charset="utf-8">
+    <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        namespace = '/'
+        var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+        {% if logged_in %}
+            socket.emit('login_user');
+        {% endif %}
 
-          $(document).ready(function() {
-            namespace = '/'
-            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace); { %
-                if logged_in %
-            }
-            socket.emit('login_user'); { % endif %
-            }
-            socket.on('new_message', function(msg) {
-                $('#post_table').find('tbody:last').append("<tr> <td> " + msg["username"] + " </td> <td> " + msg["message"] + "</td> </tr>");
-            });
+        socket.on('new_message', function(msg) {
+            console.log(msg)
+            $('#topRow').after("<tr> <td> " + msg["username"] + " </td> <td> " + msg["message"] + "</td> </tr>");
         });
-    </script>-->
+
+        socket.on('attempt_disconnect', function(msg) {
+            socket.emit("client_leave_room", msg);
+        });
+    });
+</script>
 </head>
 
 <body>

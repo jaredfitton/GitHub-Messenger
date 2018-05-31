@@ -1,5 +1,7 @@
 from flask import Flask, redirect, url_for, session, request, jsonify, Markup, flash, render_template
 from flask_oauthlib.client import OAuth
+from flask_socketio import SocketIO, emit, join_room, leave_room, close_room, rooms, disconnect
+from threading import Lock
 
 import pymongo
 import pprint
@@ -12,6 +14,8 @@ os.system("echo '[]'>" + 'forum.json')
 # os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 app = Flask(__name__)
+socketio = SocketIO(app, async_mode=None)
+
 
 app.debug = True #Change this to False for production
 
@@ -60,20 +64,23 @@ def home():
     if 'github_token' in session:
         return render_template('home.html', past_posts=posts_to_html(get_user_location()), location_set=user_location_set())
     else:
-        return render_template('home.html')
+        return render_template('home.html', async_mode=socketio.async_mode)
 
 def posts_to_html(user_location):
+    forum_table=""
+    # forum_table = Markup("<tr><td></td></tr>")
     if user_location == "no location":
         flash('no location set')
         print('no location set')
         return ""
-    forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
-    forum_table = Markup("<table id='messageTable' class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
-    for post in collection.find({"location": user_location}):
-        try:
-            forum_table += Markup("<tr> <td>" + post["username"] + "</td> <td>" + post["message"] + "</td> </tr>")
-        except Exception as e:
-            print(e)
+    # forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
+    try:
+        for post in collection.find({"location": user_location}):
+            forum_table = Markup( "<tr> <td>" + post["username"] + "</td> <td>" + post["message"] + "</td> </tr>") + forum_table
+        forum_table = Markup("<table id='messageTable' class='table table-bordered'> <tr id='topRow'> <th id='tablehead'> Username </th> <th> Message </th> </tr>") + forum_table
+
+    except Exception as e:
+        print(e)
     forum_table += Markup("</table>")
     return forum_table
 
@@ -101,13 +108,17 @@ def post():
         print("Unable to post :(")
         print(e)
 
-    return render_template('home.html', past_posts = posts_to_html(get_user_location(), location_set=user_location_set()))
+    socketio.emit('new_message', {"username": username_local, "message": message_local}, room=get_user_location())
+
+    return render_template('home.html', past_posts = posts_to_html(get_user_location()), location_set=user_location_set())
 
 
 
 @app.route('/logout')
 def logout():
     print("---------logout")
+    username = session['user_data']['login']
+    socketio.emit("attempt_disconnect", username, room=get_user_location())
     session.clear()
     flash('You were logged out')
     return render_template('home.html')
@@ -151,6 +162,23 @@ def authorized():
 def get_github_oauth_token():
     return session.get('github_token')
 
+@socketio.on('login_user') #run this when the connection starts
+def add_user_to_room():
+    print("\n\n\n\n\n\n\n\n\n\n login method called")
+    username = get_user_name()
+    room = get_user_location()
+    join_room(room)
+    print("\n\n\n\n\n\n\n\n\n\n " + username + ' has entered the room: ' + room)
+
+@socketio.on('client_leave_room')
+def client_leave_room(user):
+    if user == session['user_data']['login']:
+        room = get_user_location()
+        leave_room(room)
+        username = get_user_name()
+        print("\n\n\n\n\n\n\n\n\n\n " + username + ' has left the room: ' + room)
+
+
 def get_user_location():
     location = session['user_data']['location']
     if isinstance(location, str):
@@ -160,7 +188,7 @@ def get_user_location():
     return "no location"
 
 def get_user_name():
-    return str(session['user_data']['name'])
+    return str(session['user_data']['login'])
 
 def user_location_set():
     if get_user_location()=="no location":
@@ -168,4 +196,4 @@ def user_location_set():
     return True
 
 if __name__ == '__main__':
-    app.run()
+    socketio.run()

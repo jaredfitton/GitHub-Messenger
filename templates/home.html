@@ -20,7 +20,7 @@
 
         socket.on('new_message', function(msg) {
             console.log(msg)
-            $('#messageTable tbody').after("<tr> <td> " + msg["username"] + " </td> <td> " + msg["message"] + "</td> </tr>");
+            $('#topRow').after("<tr> <td> " + msg["username"] + " </td> <td> " + msg["message"] + "</td> </tr>");
         });
 
         socket.on('attempt_disconnect', function(msg) {

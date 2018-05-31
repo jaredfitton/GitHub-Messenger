@@ -182,7 +182,7 @@ def get_user_location():
     return "no location"
 
 def get_user_name():
-    return str(session['user_data']['name'])
+    return str(session['user_data']['login'])
 
 if __name__ == '__main__':
     socketio.run()

@@ -50,8 +50,8 @@ github = oauth.remote_app(
 def inject_logged_in():
     print("logged in")
     #if user_location=="no location":
-    return {"logged_in":('github_token' in session)}
-    #return {"logged_in":('github_token' in session), "location_set":(True)}
+    #return {"logged_in":('github_token' in session)}
+    return {"logged_in":('github_token' in session), "location_set":(True)}
     #return {"logged_in":('github_token' in session), "location_set":('location' in session)}
     #return {"logged_in": True}
 
@@ -101,7 +101,7 @@ def post():
         print("Unable to post :(")
         print(e)
 
-    return render_template('home.html', past_posts = posts_to_html(get_user_location(),location_set=user_location_set()))
+    return render_template('home.html', past_posts = posts_to_html(get_user_location(), location_set=user_location_set()))
 
 
 

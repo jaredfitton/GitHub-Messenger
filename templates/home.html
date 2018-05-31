@@ -19,8 +19,8 @@
         {% endif %}
 
         socket.on('new_message', function(msg) {
-            console.log("Got new message")
-            $('#post_table tbody').prepend("<tr> <td> " + msg["username"] + " </td> <td> " + msg["message"] + "</td> </tr>");
+            console.log(msg)
+            $('#messageTable tbody').prepend("<tr> <td> " + msg["username"] + " </td> <td> " + msg["message"] + "</td> </tr>");
         });
 
         socket.on('attempt_disconnect', function(msg) {

@@ -30,6 +30,7 @@
             });
 
             $("postButton").on("click", function() {
+                console.log("Button Clicked");
                 var text = $("#formtext").val();
                 $("#tableDiv").load("/post", {"Client_Message": text});
             });

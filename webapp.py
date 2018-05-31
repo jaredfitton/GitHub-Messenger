@@ -95,7 +95,7 @@ def posts_to_html(user_location):
 def post():
     print("posted")
     username_local = session['user_data']['login']
-    message_local = request.form['message']
+    message_local = request.form['Client_Message']
     user_location = get_user_location()
     try:
         collection.insert( { "username": username_local, "message": message_local, "location": user_location } )

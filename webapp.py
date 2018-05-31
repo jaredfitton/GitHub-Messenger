@@ -1,5 +1,7 @@
 from flask import Flask, redirect, url_for, session, request, jsonify, Markup, flash, render_template
 from flask_oauthlib.client import OAuth
+from flask_socketio import SocketIO, emit, join_room, leave_room, close_room, rooms, disconnect
+from threading import Lock
 
 import pymongo
 import pprint
@@ -12,6 +14,8 @@ os.system("echo '[]'>" + 'forum.json')
 # os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 app = Flask(__name__)
+socketio = SocketIO(app, async_mode=None)
+
 
 app.debug = True #Change this to False for production
 
@@ -48,19 +52,14 @@ github = oauth.remote_app(
 
 @app.context_processor
 def inject_logged_in():
-    # print("logged in")
-    #if get_user_location()=="no location":
-    #    return {"logged_in":('github_token' in session), "location_set":(False)}
-    #return {"logged_in":('github_token' in session), "location_set":(True)}
     return {"logged_in":('github_token' in session), "location_set":('location' in session)}
-    # #return {"logged_in": True}
 
 @app.route('/')
 def home():
     if 'github_token' in session:
         return render_template('home.html', past_posts=posts_to_html(get_user_location()))
     else:
-        return render_template('home.html')
+        return render_template('home.html', async_mode=socketio.async_mode)
 
 def posts_to_html(user_location):
     if user_location == "no location":
@@ -97,6 +96,7 @@ def post():
     user_location = get_user_location()
     try:
         collection.insert( { "username": username_local, "message": message_local, "location": user_location } )
+        socketio.emit('new_message', {"username": username_local, "message": message_local}, room=get_user_location())
     except Exception as e:
         print("Unable to post :(")
         print(e)
@@ -108,6 +108,8 @@ def post():
 @app.route('/logout')
 def logout():
     print("---------logout")
+    username = session['user_data']['login']
+    socketio.emit("attempt_disconnect", username, room=get_user_location())
     session.clear()
     flash('You were logged out')
     return render_template('home.html')
@@ -151,6 +153,23 @@ def authorized():
 def get_github_oauth_token():
     return session.get('github_token')
 
+@socketio.on('login_user') #run this when the connection starts
+def add_user_to_room():
+    print("\n\n\n\n\n\n\n\n\n\n login method called")
+    username = get_user_name()
+    room = get_user_location()
+    join_room(room)
+    print("\n\n\n\n\n\n\n\n\n\n " + username + ' has entered the room: ' + room)
+
+@socketio.on('client_leave_room')
+def client_leave_room(user):
+    if user == session['user_data']['login']:
+        room = get_user_location()
+        leave_room(room)
+        username = get_user_name()
+        print("\n\n\n\n\n\n\n\n\n\n " + username + ' has left the room: ' + room)
+
+
 def get_user_location():
     location = session['user_data']['location']
     if isinstance(location, str):
@@ -163,4 +182,4 @@ def get_user_name():
     return str(session['user_data']['name'])
 
 if __name__ == '__main__':
-    app.run()
+    socketio.run()

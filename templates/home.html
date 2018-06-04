@@ -26,6 +26,10 @@
         socket.on('attempt_disconnect', function(msg) {
             socket.emit("client_leave_room", msg);
         });
+
+        $("JoinGroup").on("click", function() {
+            alert("Feature coming soon.");
+        });
     });
 </script>
 </head>
@@ -40,9 +44,7 @@
                 <h4> <img id="logo" src="static/Github-Logo2.png" alt="logo" height="40" width="53.333" align="middle"> Groups </h4>
                 <ul class="nav nav-pills nav-stacked">
                     <li class="active"><a href="#section1">Hometown</a></li>
-                    <li><a href="#section2">Group2</a></li>
-                    <li><a href="#section3">Group3</a></li>
-                    <li><a href="#section3">Group3</a></li>
+                    <li><a id="JoinGroup">Join New Group</a></li>
                 </ul><br>
                 <p>
                     {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %} {{ message }} {% endfor %} {% endif %} {% endwith %}

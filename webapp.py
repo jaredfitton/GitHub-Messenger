@@ -121,7 +121,7 @@ def logout():
     socketio.emit("attempt_disconnect", username, room=get_user_location())
     session.clear()
     flash('You were logged out')
-    return render_template('home.html')
+    return redirect(url_for('home'))
 
 #redirect to GitHub's OAuth page and confirm callback URL
 @app.route('/login')
